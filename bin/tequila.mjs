@@ -1,27 +1,52 @@
 #!/usr/bin/env node
 'use strict';
 /** Main script to create and to run TeqFW backend application. */
+// IMPORT
 import {dirname, join} from 'node:path';
 import Container from '@teqfw/di';
+import {readFileSync} from "node:fs";
 
-// TODO: should we have version as config parameter or load it from 'package.json'?
-const version = '0.1.0';
-
+// VARS
 /* Resolve paths to main folders */
 const url = new URL(import.meta.url);
 const script = url.pathname;
 const bin = dirname(script);
 const root = join(bin, '..');
-try {
-    /* Create and setup DI container */
+
+// FUNCS
+/**
+ * Create and setup DI container.
+ * @param {string} root
+ * @returns {TeqFw_Di_Shared_Container}
+ */
+function initContainer(root) {
     /** @type {TeqFw_Di_Shared_Container} */
-    const container = new Container();
+    const res = new Container();
     const pathDi = join(root, 'node_modules/@teqfw/di/src');
     const pathCore = join(root, 'node_modules/@teqfw/core/src');
-    container.addSourceMapping('TeqFw_Di', pathDi, true, 'mjs');
-    container.addSourceMapping('TeqFw_Core', pathCore, true, 'mjs');
+    res.addSourceMapping('TeqFw_Di', pathDi, true, 'mjs');
+    res.addSourceMapping('TeqFw_Core', pathCore, true, 'mjs');
+    return res;
+}
 
-    /** Request Container to construct App then init & run it */
+/**
+ * Read project version from './package.json' or use default one.
+ * @param root
+ * @returns {*|string}
+ */
+function readVersion(root) {
+    const filename = join(root, 'package.json');
+    const buffer = readFileSync(filename);
+    const content = buffer.toString();
+    const json = JSON.parse(content);
+    return json?.version ?? '0.1.0';
+}
+
+// MAIN
+try {
+    const container = initContainer(root);
+    const version = readVersion(root);
+    /** Construct backend app instance using Container then init app & run it */
     /** @type {TeqFw_Core_Back_App} */
     const app = await container.get('TeqFw_Core_Back_App$');
     await app.init({path: root, version});
