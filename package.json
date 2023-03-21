@@ -1,0 +1,39 @@
+{
+  "name": "@flancer32/pwa-up01-img-search",
+  "version": "0.1.0",
+  "description": "Image Search PWA.",
+  "homepage": "https://github.com/flancer32/pwa-up01-img-search/",
+  "bugs": {
+    "url": "https://github.com/flancer32/pwa-up01-img-search/issues",
+    "email": "alex@flancer32.com"
+  },
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Alex Gusev",
+    "email": "alex@flancer64.com",
+    "url": "https://github.com/flancer64"
+  },
+  "repository": "github:flancer32/pwa-up01-img-search",
+  "scripts": {
+    "db-reset": "node ./bin/tequila.mjs db-init && node ./bin/tequila.mjs app-data-init",
+    "help": "node ./bin/tequila.mjs -h",
+    "start": "node ./bin/tequila.mjs web-server-start",
+    "stop": "node ./bin/tequila.mjs web-server-stop"
+  },
+  "dependencies": {
+    "@teqfw/core": "github:teqfw/core",
+    "@teqfw/db": "github:teqfw/db",
+    "@teqfw/di": "github:teqfw/di",
+    "@teqfw/test": "github:teqfw/test",
+    "@teqfw/ui-quasar": "github:teqfw/ui-quasar",
+    "@teqfw/vue": "github:teqfw/vue",
+    "@teqfw/web": "github:teqfw/web",
+    "pg": "^8"
+  },
+  "devDependencies": {
+    "mocha": "*"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
