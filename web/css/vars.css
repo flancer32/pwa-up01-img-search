@@ -1,0 +1,19 @@
+:root {
+    --bp-lg: 1920px;
+    --bp-md: 1440px;
+    --bp-sm: 1024px;
+    --bp-xs: 600px;
+    --color-bg-dark: #070505;
+    --color-bg: #f2f7fc;
+    --color-set-base: #5a18c9;
+    --color-set-darker: #300d6e;
+    --color-set-darkest: #190934;
+    --color-set-lighter: #905bec;
+    --color-set-lightest: #e9dffb;
+    --color-text: #343409;
+    --size-lg: 10px;
+    --size-md: 7px;
+    --size-sm: 5px;
+    --size-xl: 15px;
+    --size-xs: 2px;
+}

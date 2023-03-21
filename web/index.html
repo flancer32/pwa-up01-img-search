@@ -2,13 +2,58 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="Image Search">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Image Search</title>
+    <meta name="description" content="$APP_DESC">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+    <title>$APP_NAME</title>
+    <link rel="manifest" href="./pwa.json">
     <style></style>
-    <script></script>
+    <script type="module">
+        if ('serviceWorker' in navigator) {
+            // Register Service Worker on page load (if not registered before)
+            self.addEventListener('load', async () => {
+                // IMPORT (see `node_modules/@teqfw/web/web/js/install.mjs`)
+                const {bootstrap} = await import('./web/@teqfw/web/js/bootstrap.mjs');
+
+                // VARS
+                const urlSw = 'sw.js';
+                const nsApp = 'App_Front_App';
+                const cssApp = '#launcher';
+                const elLog = document.getElementById('printLog');
+                const elProgress = document.getElementById('printProgress');
+
+                // FUNCS
+                function fnLog(msg) {
+                    elLog.innerHTML = msg;
+                    console.log(`[shell]: ${msg}`);
+                }
+
+                function fnProgress(percent) {
+                    elProgress.innerHTML = percent;
+                    console.log(`[shell]: ${percent}%`);
+                }
+
+                // MAIN
+                bootstrap(fnLog, fnProgress, urlSw, nsApp, cssApp).catch((e) => {
+                    debugger
+                });
+            });
+        }
+    </script>
 </head>
 <body>
-<div>Here we are!</div>
+
+<!-- block to mount main UI component (contains blocks to output logs and to trace installation progress) -->
+<div id="launcher">
+    <div id="printLog"></div>
+    <div>
+        <img src="./img/loading.gif" alt="loading..."/>
+    </div>
+    <div id="printProgress"></div>
+</div>
+
+<!-- These resources are loaded after landing page is displayed -->
+<link rel="stylesheet" href="./styles.css">
+<script type="application/javascript" src="./src/vue/vue.global.prod.js"></script>
+<script type="application/javascript" src="./src/vue-router/vue-router.global.prod.js"></script>
 </body>
 </html>
