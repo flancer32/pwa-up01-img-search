@@ -28,6 +28,7 @@
     "@teqfw/ui-quasar": "github:teqfw/ui-quasar",
     "@teqfw/vue": "github:teqfw/vue",
     "@teqfw/web": "github:teqfw/web",
+    "@teqfw/web-event": "github:teqfw/web-event",
     "pg": "^8"
   },
   "devDependencies": {

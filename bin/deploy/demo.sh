@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 ##
-#   Rebuild JS project with the latest versions of custom modules being linked into './node_modules/' folders.
+#   Rebuild JS project with the latest versions of custom modules being placed into './node_modules/' folders.
 ##
 # root directory (relative to the current shell script, not to the execution point)
 DIR_ROOT=${DIR_ROOT:-$(cd "$(dirname "$0")/../../" && pwd)}
@@ -17,15 +17,15 @@ processRepo() {
     echo "Clone repo '${NAME}' to '${DIR_OWN}'."
     git clone "${REPO}" "${DIR_OWN}/${NAME}"
   fi
-  echo "Link sources from '${NAME}' to '${DIR_NODE}'."
-  rm -fr "${DIR_NODE:?}/${NAME}" && ln -s "${DIR_OWN}/${NAME}" "${DIR_NODE}/${NAME}"
+  echo "Move sources from '${NAME}' to '${DIR_NODE}'."
+  rm -fr "${DIR_NODE:?}/${NAME}" && mv "${DIR_OWN}/${NAME}" "${DIR_NODE}/${NAME}"
 }
 
 ##
 # MAIN FUNCTIONALITY
 ##
 echo "Remove installed dependencies and lock file."
-rm -fr "${DIR_NODE}" "${DIR_ROOT}/package-lock.json"
+rm -fr "${DIR_NODE}" "${DIR_OWN}" "${DIR_ROOT}/package-lock.json"
 
 echo "Re-install JS project."
 cd "${DIR_ROOT}" || exit 255
@@ -44,4 +44,4 @@ processRepo "teqfw/web"
 processRepo "teqfw/web-event"
 
 echo ""
-echo "App deployment in 'dev' mode is done."
+echo "App deployment in 'demo' mode is done."

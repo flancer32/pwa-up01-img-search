@@ -1,4 +1,4 @@
-name: Deploy App to pilot env.
+name: Deploy App to demo env.
 
 # start action manually
 on: workflow_dispatch
@@ -19,7 +19,7 @@ jobs:
 
       - name: Build application and link @teqfw repos.
         run: |
-          ./bin/deploy/dev.sh
+          ./bin/deploy/demo.sh
 
       - name: Add application files to archive.
         uses: montudor/action-zip@v1
