@@ -52,7 +52,7 @@ jobs:
           username: ${{ env.USER }}
           key: ${{ secrets.SERVER_SSH_KEY_CONTABO }}
           source: ${{ env.ZIP }}
-          target: ${{env.PATH_TARGET}}/../
+          target: ${{env.PATH_TARGET}}/
 
       - name: Extract files on Remote Server and switch site to the new instance.
         uses: appleboy/ssh-action@master
@@ -61,7 +61,7 @@ jobs:
           username: ${{ env.USER }}
           key: ${{ secrets.SERVER_SSH_KEY_CONTABO }}
           script: |
-            cd "${{env.PATH_TARGET}}/../"
+            cd "${{env.PATH_TARGET}}/"
             rm -fr ${{env.PRJ}}.old/  
             mkdir ${{env.PRJ}}.new
             unzip ${{env.ZIP}} -d ./${{env.PRJ}}.new/ &> /dev/null
