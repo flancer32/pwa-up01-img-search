@@ -1,4 +1,7 @@
 {
+  "@flancer32/pwa-up01-img-search": {
+    "uploadRoot": "./relative/or/absolute/path/to/uploads/folder"
+  },
   "@teqfw/db": {
     "client": "pg",
     "connection": {

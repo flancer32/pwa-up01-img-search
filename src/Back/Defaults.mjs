@@ -6,6 +6,8 @@ export default class App_Back_Defaults {
     /** @type {TeqFw_Web_Back_Defaults} */
     MOD_WEB;
 
+    PATH_TO_UPLOADS = './var/store/upload'; // default path to store uploads
+
     /** @type {App_Shared_Defaults} */
     SHARED;
 

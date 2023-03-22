@@ -11,8 +11,8 @@ const NS = 'App_Shared_Dto_Image';
  */
 const ATTR = {
     BID: 'bid',
-    BASE64: 'base64',
     DATE_CREATED: 'dateCreated',
+    TITLE: 'title',
 };
 
 Object.freeze(ATTR);
@@ -25,13 +25,10 @@ class Dto {
     static namespace = NS;
     /** @type {number} */
     bid;
-    /**
-     * TODO: should we use base64 encoded body here? may be direct links would be better?
-     * @type {string}
-     */
-    base64;
     /** @type {Date} */
     dateCreated;
+    /** @type {string} */
+    title;
 }
 
 /**
@@ -57,8 +54,8 @@ export default class App_Shared_Dto_Image {
             const res = Object.assign(new Dto(), data);
             // cast known attributes
             res.bid = castInt(data?.bid);
-            res.base64 = castString(data?.base64);
             res.dateCreated = castDate(data?.dateCreated);
+            res.title = castString(data?.title);
             return res;
         }
 

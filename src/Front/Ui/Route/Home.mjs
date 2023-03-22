@@ -5,6 +5,7 @@
  */
 // MODULE'S VARS
 const NS = 'App_Front_Ui_Route_Home';
+const ID_TITLE = 'title';
 const ID_UPLOAD = 'upload';
 
 // MODULE'S FUNCTIONS
@@ -39,7 +40,7 @@ export default function (spec) {
     const template = `
 <div style="display: flex; flex-direction: column; gap: 10px;">
    <div style="display: flex; flex-direction: row; gap: 10px;">
-       <input v-model="text" placeholder="Enter image title to search...">
+       <input id="${ID_TITLE}" v-model="title" placeholder="Enter image title to search...">
        <button class="btn large" v-on:click="onClick">Search</button>
     </div>
     <input id="${ID_UPLOAD}" type="file" v-on:change="onSelectFileChanged">
@@ -64,8 +65,8 @@ export default function (spec) {
         components: {},
         data() {
             return {
-                bufUpload: null, // 'data:image/png;base64,...'
-                text: null,
+                bufUpload: null, // 'data:image/png;base64,...' (TODO: remove buffer)
+                title: null,
             };
         },
         methods: {
@@ -74,8 +75,11 @@ export default function (spec) {
             },
             async onUpload() {
                 const buffer = await bufferFile();
-                const res = await modImg.create('title', buffer);
-                debugger
+                /** @type {App_Shared_Dto_Image.Dto} */
+                const res = await modImg.create(this.title, buffer);
+                if (res?.bid) {
+                    console.dir(res);
+                }
             },
             /**
              * Load base64 decoded content of the selected file into memory buffer.

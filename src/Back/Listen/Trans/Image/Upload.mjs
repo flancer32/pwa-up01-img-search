@@ -2,7 +2,7 @@
  * Save uploaded image to disk and registry it to DB.
  */
 // MODULE'S IMPORT
-import {randomUUID} from 'crypto';
+import {randomUUID} from 'node:crypto';
 import {extension} from 'mime-types';
 
 // MODULE'S CLASSES
@@ -27,6 +27,8 @@ export default class App_Back_Listen_Trans_Image_Upload {
         const rdbImage = spec['App_Back_RDb_Schema_Image$'];
         /** @type {App_Shared_Dto_Image} */
         const dtoImage = spec['App_Shared_Dto_Image$'];
+        /** @type {App_Back_Act_Image_Save.act|function} */
+        const actSave = spec['App_Back_Act_Image_Save$'];
 
         // MAIN
         const A_IMG = rdbImage.getAttributes();
@@ -63,18 +65,19 @@ export default class App_Back_Listen_Trans_Image_Upload {
                 const uuid = randomUUID();
                 const {ext, body} = splitB64(b64);
                 // save data to filesystem
-
+                await actSave({uuid, ext, body});
                 // save data to RDB
                 const dto = rdbImage.createDto();
                 dto.uuid = uuid;
                 dto.ext = ext;
-                dto.title = title.toLowerCase();
+                dto.title = title; //.toLowerCase();
                 const {[A_IMG.BID]: bid} = await crud.create(trx, rdbImage, dto);
                 /** @type {App_Back_RDb_Schema_Image.Dto} */
                 const saved = await crud.readOne(trx, rdbImage, bid);
                 // prepare response
                 const image = dtoImage.createDto();
                 image.bid = saved.bid;
+                image.title = saved.title;
                 image.dateCreated = saved.date_created;
                 data.item = image;
                 //

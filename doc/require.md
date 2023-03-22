@@ -16,4 +16,7 @@
 ## Questions
 
 * What is the limit for an image size?
+* What is the limit for total images count?
+* Should we store original titles or can we change it to lower case?
 * Should we store original filenames?
+* How should we inform user about events (file is uploaded or on error)?

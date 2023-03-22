@@ -25,7 +25,7 @@ export default class App_Front_Mod_Image {
          * Upload base64 encoded image to backend and return image DTO after image registration in DB.
          * @param {string} title
          * @param {string} base64
-         * @returns {Promise<number|null>}
+         * @returns {Promise<App_Shared_Dto_Image.Dto>}
          */
         this.create = async function (title, base64) {
             try {
