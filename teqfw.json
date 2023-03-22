@@ -4,5 +4,10 @@
       "ns": "App",
       "path": "./src"
     }
+  },
+  "@teqfw/core": {
+    "plugin": {
+      "onInit": "App_Back_Plugin_Init"
+    }
   }
 }

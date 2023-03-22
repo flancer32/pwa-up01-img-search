@@ -19,6 +19,7 @@ const FILES_TO_CACHE = [
     './src/vue-router/vue-router.global.prod.js',
     './src/vue/vue.global.prod.js',
     './styles.css',
+    './web/@teqfw/web/js/bootstrap.mjs',
 ];
 
 // FUNCS
