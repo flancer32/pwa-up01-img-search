@@ -15,6 +15,11 @@ class Dto {
      * @type {string}
      */
     b64Image;
+    /**
+     * Title to use in search.
+     * @type {string}
+     */
+    title;
 }
 
 /**

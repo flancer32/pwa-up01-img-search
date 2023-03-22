@@ -16,3 +16,4 @@
 ## Questions
 
 * What is the limit for an image size?
+* Should we store original filenames?

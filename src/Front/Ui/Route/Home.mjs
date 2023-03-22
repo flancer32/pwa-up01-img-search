@@ -74,8 +74,7 @@ export default function (spec) {
             },
             async onUpload() {
                 const buffer = await bufferFile();
-                debugger
-                const res = await modImg.create(buffer);
+                const res = await modImg.create('title', buffer);
                 debugger
             },
             /**

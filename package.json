@@ -15,7 +15,7 @@
   },
   "repository": "github:flancer32/pwa-up01-img-search",
   "scripts": {
-    "db-reset": "node ./bin/tequila.mjs db-init && node ./bin/tequila.mjs app-data-init",
+    "db-reset": "node ./bin/tequila.mjs db-init",
     "help": "node ./bin/tequila.mjs -h",
     "start": "node ./bin/tequila.mjs web-server-start",
     "stop": "node ./bin/tequila.mjs web-server-stop"

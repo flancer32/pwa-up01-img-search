@@ -1,6 +1,11 @@
 /**
  * Save uploaded image to disk and registry it to DB.
  */
+// MODULE'S IMPORT
+import {randomUUID} from 'crypto';
+import {extension} from 'mime-types';
+
+// MODULE'S CLASSES
 export default class App_Back_Listen_Trans_Image_Upload {
     constructor(spec) {
         // DEPS
@@ -18,11 +23,13 @@ export default class App_Back_Listen_Trans_Image_Upload {
         const conn = spec['TeqFw_Db_Back_RDb_IConnect$'];
         /** @type {TeqFw_Db_Back_Api_RDb_ICrudEngine} */
         const crud = spec['TeqFw_Db_Back_Api_RDb_ICrudEngine$'];
+        /** @type {App_Back_RDb_Schema_Image} */
+        const rdbImage = spec['App_Back_RDb_Schema_Image$'];
         /** @type {App_Shared_Dto_Image} */
         const dtoImage = spec['App_Shared_Dto_Image$'];
 
         // MAIN
-        // const A_EVT = rdbEvt.getAttributes();
+        const A_IMG = rdbImage.getAttributes();
         logger.setNamespace(this.constructor.name);
         eventsBack.subscribe(esfReq, handler)
 
@@ -33,7 +40,13 @@ export default class App_Back_Listen_Trans_Image_Upload {
          */
         async function handler({data: dataIn, meta: metaIn}) {
             // FUNCS
-
+            function splitB64(b64) {
+                const parts = b64.split(';base64,');
+                const body = parts.pop();
+                const mime = parts[0].split(':').pop();
+                const ext = extension(mime);
+                return {ext, body};
+            }
 
             // MAIN
             const data = esbRes.createDto();
@@ -43,8 +56,26 @@ export default class App_Back_Listen_Trans_Image_Upload {
             //
             const trx = await conn.startTransaction();
             try {
+                // normalize data
+                const title = dataIn?.title;
+                const b64 = dataIn?.b64Image;
+                //
+                const uuid = randomUUID();
+                const {ext, body} = splitB64(b64);
+                // save data to filesystem
+
+                // save data to RDB
+                const dto = rdbImage.createDto();
+                dto.uuid = uuid;
+                dto.ext = ext;
+                dto.title = title.toLowerCase();
+                const {[A_IMG.BID]: bid} = await crud.create(trx, rdbImage, dto);
+                /** @type {App_Back_RDb_Schema_Image.Dto} */
+                const saved = await crud.readOne(trx, rdbImage, bid);
+                // prepare response
                 const image = dtoImage.createDto();
-                image.bid = 32;
+                image.bid = saved.bid;
+                image.dateCreated = saved.date_created;
                 data.item = image;
                 //
                 await trx.commit();

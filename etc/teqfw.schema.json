@@ -1,0 +1,27 @@
+{
+  "package": {
+    "app": {
+      "entity": {
+        "image": {
+          "comment": "Uploaded image.",
+          "attr": {
+            "bid": {"type": "id"},
+            "date_created": {
+              "comment": "UTC date-time when image was uploaded.",
+              "type": "datetime",
+              "default": "current"
+            },
+            "title": {"type": "text", "comment": "Image title to use in searches."},
+            "ext": {"type": "string", "comment": "Default extension for the file (by MIME)."},
+            "uuid": {"type": "string", "comment": "UUID as new name for uploaded file."}
+          },
+          "index": {
+            "title": {"type": "index", "attrs": ["title"]},
+            "uuid": {"type": "unique", "attrs": ["uuid"]}
+          }
+        }
+      }
+    }
+  },
+  "refs": {}
+}

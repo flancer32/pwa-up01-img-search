@@ -23,13 +23,15 @@ export default class App_Front_Mod_Image {
 
         /**
          * Upload base64 encoded image to backend and return image DTO after image registration in DB.
+         * @param {string} title
          * @param {string} base64
          * @returns {Promise<number|null>}
          */
-        this.create = async function (base64) {
+        this.create = async function (title, base64) {
             try {
                 const req = esfReqUpload.createDto();
                 req.b64Image = base64;
+                req.title = title;
                 /** @type {App_Shared_Event_Back_Image_Upload_Response.Dto} */
                 const rs = await callTrans(req, esbResUpload);
                 return (rs?.item) ? rs.item : null;
