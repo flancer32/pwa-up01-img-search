@@ -141,7 +141,11 @@ export default class App_Front_App {
          * @param {Element|string} elRoot
          */
         this.mount = function (elRoot) {
-            if (_isInitialized) _root.mount(elRoot);
+            if (_isInitialized) {
+                _root.mount(elRoot);
+                const elLauncher = document.getElementById('launcher');
+                elLauncher.remove();
+            }
         }
 
         this.reinstall = function (elRoot) {

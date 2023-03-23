@@ -11,5 +11,36 @@ HTML, BODY {
     flex-direction: column;
     height: 100vh;
     justify-content: center;
+    left: 0;
+    position: relative;
+    top: 0;
     width: 100vw;
+}
+
+#app {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: var(--size-md);
+    left: 0;
+    position: relative;
+    top: 0;
+    width: 100%;
+}
+
+.gallery {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.gallery IMG {
+    border: 1px solid #333;
+    max-width: 200px;
+    margin: auto;
+}
+
+.gallery DIV {
+    text-align: center;
 }

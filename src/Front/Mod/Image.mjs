@@ -9,6 +9,10 @@ export default class App_Front_Mod_Image {
         const logger = spec['TeqFw_Core_Shared_Api_Logger$$']; // instance
         /** @type {TeqFw_Web_Event_Front_Act_Trans_Call.act|function} */
         const callTrans = spec['TeqFw_Web_Event_Front_Act_Trans_Call$'];
+        /** @type {App_Shared_Event_Front_Image_List_Request} */
+        const esfReqList = spec['App_Shared_Event_Front_Image_List_Request$'];
+        /** @type {App_Shared_Event_Back_Image_List_Response} */
+        const esbResList = spec['App_Shared_Event_Back_Image_List_Response$'];
         /** @type {App_Shared_Event_Front_Image_Upload_Request} */
         const esfReqUpload = spec['App_Shared_Event_Front_Image_Upload_Request$'];
         /** @type {App_Shared_Event_Back_Image_Upload_Response} */
@@ -42,6 +46,15 @@ export default class App_Front_Mod_Image {
             return null;
         }
 
-
+        /**
+         *
+         * @returns {Promise<App_Shared_Dto_Image.Dto[]>}
+         */
+        this.list = async function () {
+            const req = esfReqList.createDto();
+            /** @type {App_Shared_Event_Back_Image_List_Response.Dto} */
+            const rs = await callTrans(req, esbResList);
+            return rs?.items ?? [];
+        }
     }
 }

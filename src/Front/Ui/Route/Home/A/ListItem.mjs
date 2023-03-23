@@ -1,0 +1,55 @@
+/**
+ * UI component for one item of images list.
+ *
+ * @namespace App_Front_Ui_Route_Home_A_ListItem
+ */
+// MODULE'S VARS
+const NS = 'App_Front_Ui_Route_Home_A_ListItem';
+
+// MODULE'S FUNCTIONS
+/**
+ * TeqFW DI factory function to get dependencies for the object.
+ *
+ * @returns {App_Front_Ui_Route_Home_A_ListItem.vueCompTmpl}
+ */
+export default function (spec) {
+    /** @type {App_Front_Defaults} */
+    const DEF = spec['App_Front_Defaults$'];
+
+    // VARS
+    const template = `
+<div>
+    <div class="title">{{item.title}}</div>
+    <div>
+        <img src="./img/placeholder.png"  />
+    </div>
+</div>
+`;
+
+    // FUNCS
+
+
+    // MAIN
+    /**
+     * Template to create new component instances using Vue.
+     *
+     * @const {Object} vueCompTmpl
+     * @memberOf App_Front_Ui_Route_Home_A_ListItem
+     */
+    return {
+        teq: {package: DEF.SHARED.NAME},
+        name: NS,
+        template,
+        components: {},
+        data() {
+            return {};
+        },
+        props: {
+            item: null,
+        },
+        methods: {},
+        created() {
+
+        },
+    };
+}

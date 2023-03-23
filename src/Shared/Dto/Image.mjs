@@ -12,7 +12,9 @@ const NS = 'App_Shared_Dto_Image';
 const ATTR = {
     BID: 'bid',
     DATE_CREATED: 'dateCreated',
+    EXT: 'ext',
     TITLE: 'title',
+    UUID: 'uuid',
 };
 
 Object.freeze(ATTR);
@@ -27,8 +29,21 @@ class Dto {
     bid;
     /** @type {Date} */
     dateCreated;
-    /** @type {string} */
+    /**
+     * Default extension for the file (by MIME).
+     * @type {string}
+     */
+    ext;
+    /**
+     * Image title to use in searches.
+     * @type {string}
+     */
     title;
+    /**
+     * UUID as new name for uploaded file.
+     * @type {string}
+     */
+    uuid;
 }
 
 /**
@@ -55,7 +70,9 @@ export default class App_Shared_Dto_Image {
             // cast known attributes
             res.bid = castInt(data?.bid);
             res.dateCreated = castDate(data?.dateCreated);
+            res.ext = castString(data?.ext);
             res.title = castString(data?.title);
+            res.uuid = castString(data?.uuid);
             return res;
         }
 

@@ -19,6 +19,7 @@ export default function Factory(spec) {
     // FUNCS
     async function init() {
         // create event listeners synchronously to prevent doubling of singletons in container
+        await container.get('App_Back_Listen_Trans_Image_List$');
         await container.get('App_Back_Listen_Trans_Image_Upload$');
         // run scheduled tasks
         cronFrontClean.start().catch(logger.error);

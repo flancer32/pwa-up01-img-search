@@ -1,31 +1,21 @@
 /**
- * Upload image to backend.
+ * Get list of images from backend.
  */
 // MODULE'S VARS
-const NS = 'App_Shared_Event_Front_Image_Upload_Request';
+const NS = 'App_Shared_Event_Front_Image_List_Request';
 
 // MODULE'S CLASSES
 /**
- * @memberOf App_Shared_Event_Front_Image_Upload_Request
+ * @memberOf App_Shared_Event_Front_Image_List_Request
  */
 class Dto {
     static namespace = NS;
-    /**
-     * Base64 encoded image.
-     * @type {string}
-     */
-    b64Image;
-    /**
-     * Title to use in search.
-     * @type {string}
-     */
-    title;
 }
 
 /**
  * @implements TeqFw_Core_Shared_Api_Factory_Dto
  */
-export default class App_Shared_Event_Front_Image_Upload_Request {
+export default class App_Shared_Event_Front_Image_List_Request {
     constructor(spec) {
         // DEPS
         /** @type {TeqFw_Core_Shared_Util_Cast.castString|function} */
@@ -33,15 +23,13 @@ export default class App_Shared_Event_Front_Image_Upload_Request {
 
         // INSTANCE METHODS
         /**
-         * @param {App_Shared_Event_Front_Image_Upload_Request.Dto} [data]
-         * @return {App_Shared_Event_Front_Image_Upload_Request.Dto}
+         * @param {App_Shared_Event_Front_Image_List_Request.Dto} [data]
+         * @return {App_Shared_Event_Front_Image_List_Request.Dto}
          */
         this.createDto = function (data) {
             // create new DTO and populate it with initialization data
             const res = Object.assign(new Dto(), data);
             // cast known attributes
-            res.b64Image = castString(data?.b64Image);
-            res.title = castString(data?.title);
             return res;
         }
     }
