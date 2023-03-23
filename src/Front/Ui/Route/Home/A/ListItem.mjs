@@ -21,7 +21,7 @@ export default function (spec) {
 <div>
     <div class="title">{{item.title}}</div>
     <div>
-        <img :src="uiImgSource" :alt="item.title"/>
+        <a :href="uiSearchHref" target="_blank"><img :src="uiImgSource" :alt="item.title"/></a>
     </div>
 </div>
 `;
@@ -52,6 +52,11 @@ export default function (spec) {
             uiImgSource() {
                 const filename = `${this.item.uuid}.${this.item.ext}`;
                 return `/${DEF.SHARED.SPACE_IMAGE}/${filename}`;
+            },
+            uiSearchHref() {
+                const key = this.item.title.toLowerCase();
+                const norm = encodeURI(key);
+                return `https://www.google.com/search?q=${norm}`;
             },
         },
         methods: {},
