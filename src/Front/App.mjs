@@ -64,7 +64,7 @@ export default class App_Front_App {
              * @param {TeqFw_Di_Shared_Container} container
              */
             async function initEventListeners(container) {
-                // await container.get('App_Front_Listen_Connect_Manager$');
+                await container.get('App_Front_Listen_Connect_Manager$');
             }
 
             function initUiComponents(app) {
