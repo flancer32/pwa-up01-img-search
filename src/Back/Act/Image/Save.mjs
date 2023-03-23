@@ -9,8 +9,7 @@
  * @namespace App_Back_Act_Image_Save
  */
 // MODULE'S IMPORT
-import {existsSync, mkdirSync, writeFileSync} from 'node:fs';
-import {join, isAbsolute} from 'node:path';
+import {writeFileSync} from 'node:fs';
 
 // MODULE'S VARS
 const NS = 'App_Back_Act_Image_Save';
@@ -22,29 +21,10 @@ const NS = 'App_Back_Act_Image_Save';
  */
 export default function (spec) {
     // DEPS
-    /** @type {App_Back_Defaults} */
-    const DEF = spec['App_Back_Defaults$'];
-    /** @type {TeqFw_Core_Back_Config} */
-    const config = spec['TeqFw_Core_Back_Config$'];
-
-    // VARS
-    const _root = composeUploadRoot();
+    /** @type {App_Back_Helper_Upload} */
+    const hlpUpload = spec['App_Back_Helper_Upload$'];
 
     // FUNCS
-    /**
-     * Compose path to root folder to store uploads and create folder if does not exist.
-     * @returns {string}
-     */
-    function composeUploadRoot() {
-        /** @type {App_Back_Plugin_Dto_Config_Local.Dto} */
-        const cfgPlugin = config.getLocal(DEF.SHARED.NAME);
-        const path = cfgPlugin?.uploadRoot ?? DEF.PATH_TO_UPLOADS;
-        const prjRoot = config.getPathToRoot();
-        const res = (isAbsolute(path)) ? path : join(prjRoot, path);
-        if (!existsSync(res)) mkdirSync(res, {recursive: true});
-        return res;
-    }
-
     /**
      * Result function.
      *
@@ -56,10 +36,8 @@ export default function (spec) {
      * @return {Promise<{file: string}>} full path to the file with extension
      */
     async function act({uuid, ext, body}) {
-        const path = join(_root, uuid[0], uuid[1]);
-        if (!existsSync(path)) mkdirSync(path, {recursive: true});
-        const full = join(path, uuid);
-        const file = `${full}.${ext}`;
+        const path = hlpUpload.uuidToPath(uuid);
+        const file = `${path}.${ext}`;
         writeFileSync(file, body, {encoding: 'base64'});
         return {file};
     }

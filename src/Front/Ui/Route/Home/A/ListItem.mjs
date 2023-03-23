@@ -21,7 +21,7 @@ export default function (spec) {
 <div>
     <div class="title">{{item.title}}</div>
     <div>
-        <img src="./img/placeholder.png"  />
+        <img :src="uiImgSource" :alt="item.title"/>
     </div>
 </div>
 `;
@@ -45,7 +45,14 @@ export default function (spec) {
             return {};
         },
         props: {
+            /** @type {App_Shared_Dto_Image.Dto} */
             item: null,
+        },
+        computed: {
+            uiImgSource() {
+                const filename = `${this.item.uuid}.${this.item.ext}`;
+                return `/${DEF.SHARED.SPACE_IMAGE}/${filename}`;
+            },
         },
         methods: {},
         created() {

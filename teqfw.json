@@ -9,5 +9,13 @@
     "plugin": {
       "onInit": "App_Back_Plugin_Init"
     }
+  },
+  "@teqfw/web": {
+    "handlers": {
+      "App_Back_Web_Handler_Image": {
+        "before": ["TeqFw_Web_Back_App_Server_Handler_Static"],
+        "spaces": ["app-image"]
+      }
+    }
   }
 }
