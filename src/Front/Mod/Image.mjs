@@ -47,11 +47,12 @@ export default class App_Front_Mod_Image {
         }
 
         /**
-         *
+         * @param {string} [key]
          * @returns {Promise<App_Shared_Dto_Image.Dto[]>}
          */
-        this.list = async function () {
+        this.list = async function (key) {
             const req = esfReqList.createDto();
+            req.searchKey = key;
             /** @type {App_Shared_Event_Back_Image_List_Response.Dto} */
             const rs = await callTrans(req, esbResList);
             return rs?.items ?? [];

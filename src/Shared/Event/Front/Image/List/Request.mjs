@@ -10,6 +10,8 @@ const NS = 'App_Shared_Event_Front_Image_List_Request';
  */
 class Dto {
     static namespace = NS;
+    /** @type {string} */
+    searchKey;
 }
 
 /**
@@ -30,6 +32,7 @@ export default class App_Shared_Event_Front_Image_List_Request {
             // create new DTO and populate it with initialization data
             const res = Object.assign(new Dto(), data);
             // cast known attributes
+            res.searchKey = castString(data?.searchKey);
             return res;
         }
     }

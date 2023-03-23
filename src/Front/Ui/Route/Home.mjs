@@ -41,13 +41,16 @@ export default function (spec) {
     // VARS
     const template = `
 <div style="display: flex; flex-direction: column; gap: 10px;">
-   <div style="display: flex; flex-direction: row; gap: 10px;">
-       <input id="${ID_TITLE}" v-model="title" placeholder="Enter image title to search...">
-       <button class="btn large" v-on:click="onClick">Search</button>
+    <div style="display: flex; flex-direction: row; gap: 10px;">
+        <input v-model="title"
+               id="${ID_TITLE}"
+               placeholder="Enter image title to search..."
+               v-on:keyup.enter="onSearch"
+        >
+        <button class="btn large" v-on:click="onSearch">Search</button>
     </div>
     <input id="${ID_UPLOAD}" type="file" v-on:change="onSelectFileChanged">
     <button v-on:click="onUpload">Upload Image</button>
-    <button v-on:click="onListAll">List All Uploads</button>
     <div class="gallery">
         <template v-for="one of items">
             <ui-item :item="one" />
@@ -79,13 +82,8 @@ export default function (spec) {
             };
         },
         methods: {
-            onClick() {
-                console.log(`done.`);
-            },
-            async onListAll() {
-                const res = await modImg.list();
-                this.items = res;
-                console.dir(res);
+            async onSearch() {
+                this.items = await modImg.list(this.title);
             },
             async onUpload() {
                 const buffer = await bufferFile();

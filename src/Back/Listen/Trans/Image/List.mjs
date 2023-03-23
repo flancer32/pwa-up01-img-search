@@ -25,6 +25,7 @@ export default class App_Back_Listen_Trans_Image_List {
         const convImage = spec['App_Back_Convert_Image$'];
 
         // MAIN
+        const A_IMG = rdbImage.getAttributes();
         logger.setNamespace(this.constructor.name);
         eventsBack.subscribe(esfReq, handler)
 
@@ -45,8 +46,12 @@ export default class App_Back_Listen_Trans_Image_List {
             const trx = await conn.startTransaction();
             try {
                 // normalize data
+                const key = dataIn.searchKey;
                 // select data from RDB
-                const rs = await crud.readSet(trx, rdbImage);
+                const where = (key)
+                    ? (b) => b.whereLike(trx.raw(`LOWER(${A_IMG.TITLE})`), `%${key.trim().toLowerCase()}%`)
+                    : null;
+                const rs = await crud.readSet(trx, rdbImage, where);
                 const items = [];
                 for (const one of rs) items.push(convImage.rdb2share(one));
                 data.items = items;
