@@ -28,6 +28,8 @@ export default class App_Front_App {
         const container = spec['TeqFw_Di_Shared_Container$'];
         /** @type {TeqFw_Core_Shared_Api_Logger} */
         const logger = spec['TeqFw_Core_Shared_Api_Logger$$']; // instance
+        /** @type {TeqFw_Ui_Quasar_Front_Lib} */
+        const quasar = spec['TeqFw_Ui_Quasar_Front_Lib'];
         /** @type {TeqFw_Web_Event_Front_Web_Connect_Stream_Open.act|function} */
         const connReverseOpen = spec['TeqFw_Web_Event_Front_Web_Connect_Stream_Open$'];
         /** @type {TeqFw_Web_Front_Mod_Config} */
@@ -67,8 +69,11 @@ export default class App_Front_App {
                 await container.get('App_Front_Listen_Connect_Manager$');
             }
 
-            function initUiComponents(app) {
-
+            function initQuasarUi(app, quasar) {
+                app.use(quasar, {config: {}});
+                // noinspection JSUnresolvedVariable
+                quasar.iconSet.set(quasar.iconSet.svgMaterialIcons);
+                quasar.lang.set(quasar.lang.ru);
             }
 
             function initRouter(app, DEF, container) {
@@ -117,12 +122,11 @@ export default class App_Front_App {
             _print(`Front UUID: ${modIdFront.getFrontUuid()}.`);
             try {
                 await initEventListeners(container);
-                _print(`Frontend processes are created.`);
+                _print(`Event listeners are created.`);
                 await connReverseOpen();
                 _print(`Stream for backend events is opened.`);
-                initUiComponents(_root);
-                _print(`Data sources are initialized.`);
-                // validate route and authentication
+                initQuasarUi(_root, quasar);
+                _print(`Quasar UI is initialized.`);
                 initRouter(_root, DEF, container);
                 _print(`Vue app is created and initialized.`);
                 _isInitialized = true;

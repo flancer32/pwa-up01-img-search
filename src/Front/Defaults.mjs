@@ -3,6 +3,8 @@
  */
 export default class App_Front_Defaults {
 
+    COLOR_Q_PRIMARY = 'primary';
+
     ROUTE_HOME = '/';
 
     /** @type {App_Shared_Defaults} */

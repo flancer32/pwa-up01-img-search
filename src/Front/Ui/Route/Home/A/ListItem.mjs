@@ -18,12 +18,12 @@ export default function (spec) {
 
     // VARS
     const template = `
-<div>
+<q-card>
     <div class="title">{{item.title}}</div>
     <div>
         <a :href="uiSearchHref" target="_blank"><img :src="uiImgSource" :alt="item.title"/></a>
     </div>
-</div>
+</q-card>
 `;
 
     // FUNCS

@@ -5,7 +5,6 @@
  */
 // MODULE'S VARS
 const NS = 'App_Front_Ui_Route_Home';
-const ID_TITLE = 'title';
 const ID_UPLOAD = 'upload';
 
 // MODULE'S FUNCTIONS
@@ -40,22 +39,40 @@ export default function (spec) {
 
     // VARS
     const template = `
-<div style="display: flex; flex-direction: column; gap: 10px;">
-    <div style="display: flex; flex-direction: row; gap: 10px;">
-        <input v-model="title"
-               id="${ID_TITLE}"
-               placeholder="Enter image title to search..."
-               v-on:keyup.enter="onSearch"
-        >
-        <button class="btn large" v-on:click="onSearch">Search</button>
+<div class="col q-gutter-xs">
+    <div class="row q-gutter-xs  justify-center items-center">
+        <div style="width: 200px;">
+            <q-input v-model="title"
+                     :loading="ifLoading"
+                     autofocus
+                     clearable
+                     dense
+                     outlined
+                     placeholder="Enter image title to search..."
+                     v-on:keyup.enter="onSearch"
+            />
+        </div>
+        <div>
+            <q-btn label="OK" color="${DEF.COLOR_Q_PRIMARY}" v-on:click="onSearch"/>
+        </div>
+        <div>
+            <q-btn label="Upload" color="${DEF.COLOR_Q_PRIMARY}" v-on:click="onUpload"/>
+        </div>
     </div>
+    <div class="text-center">
+        {{info}}
+    </div> 
+    <div>
+        <div class="gallery flex justify-center q-gutter-md">
+            <template v-for="one of items">
+                <ui-item :item="one"/>
+            </template>
+        </div>
+    </div>
+</div>
+<div style="display: none; flex-direction: column; gap: 10px;">
     <input id="${ID_UPLOAD}" type="file" v-on:change="onSelectFileChanged">
     <button v-on:click="onUpload">Upload Image</button>
-    <div class="gallery">
-        <template v-for="one of items">
-            <ui-item :item="one" />
-        </template>
-    </div>
 </div>
 `;
 
@@ -77,13 +94,24 @@ export default function (spec) {
         data() {
             return {
                 bufUpload: null, // 'data:image/png;base64,...' (TODO: remove buffer)
-                title: null,
+                ifLoading: false,
+                info: null,
                 items: [],
+                title: null,
             };
         },
         methods: {
             async onSearch() {
-                this.items = await modImg.list(this.title);
+                this.ifLoading = true;
+                const rs = await modImg.list(this.title);
+                if (rs) {
+                    this.items = rs;
+
+                } else {
+                    this.items = [];
+                }
+                this.info = `Total ${this.items.length} items are found.`;
+                this.ifLoading = false;
             },
             async onUpload() {
                 const buffer = await bufferFile();

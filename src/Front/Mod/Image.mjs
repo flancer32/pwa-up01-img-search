@@ -51,11 +51,17 @@ export default class App_Front_Mod_Image {
          * @returns {Promise<App_Shared_Dto_Image.Dto[]>}
          */
         this.list = async function (key) {
-            const req = esfReqList.createDto();
-            req.searchKey = key;
-            /** @type {App_Shared_Event_Back_Image_List_Response.Dto} */
-            const rs = await callTrans(req, esbResList);
-            return rs?.items ?? [];
+            try {
+                const req = esfReqList.createDto();
+                req.searchKey = key;
+                /** @type {App_Shared_Event_Back_Image_List_Response.Dto} */
+                const rs = await callTrans(req, esbResList);
+                return rs?.items ?? [];
+            } catch (e) {
+                // timeout or error
+                logger.error(`Cannot load list of uploads from backend. Error: ${e?.message}`);
+            }
+            return null;
         }
     }
 }

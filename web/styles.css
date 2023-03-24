@@ -29,15 +29,11 @@ HTML, BODY {
     width: 100%;
 }
 
-.gallery {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
 
 .gallery IMG {
     border: 1px solid #333;
-    max-width: 200px;
+    max-width: 150px;
+    max-height: 150px;
     margin: auto;
 }
 
