@@ -52,10 +52,12 @@ export default function (spec) {
         <q-card-section class="">
             <input id="${ID_UPLOAD}" type="file" tabindex="-1" hidden v-on:change="onSelectFileChanged">
             <!-- image -->
-            <div class="text-center" style="">
+            <div class="text-center">
                 <img :src="bufferB64"
+                     :hidden="!ifSelected"
+                     alt="Uploaded Image"
                      style="max-width: 120px; max-height: 120px; border: 1px solid black;"
-                     alt="Uploaded Image">
+                >
             </div>
             <!-- title -->
             <div>
@@ -98,14 +100,16 @@ export default function (spec) {
             return {
                 bufferB64: null, // 'data:image/png;base64,...'
                 ifLoading: false,
-                ifSelected: false,
                 title: null,
             };
         },
         props: {},
         computed: {
             ifCanUpload() {
-                return !!this.title;
+                return Boolean(this.title) && this.ifSelected;
+            },
+            ifSelected() {
+                return Boolean(this.bufferB64);
             },
         },
         /**
@@ -115,7 +119,6 @@ export default function (spec) {
             formReset() {
                 this.bufferB64 = null;
                 this.ifLoading = false;
-                this.ifSelected = false;
                 this.title = null;
             },
             hide() {
@@ -129,7 +132,6 @@ export default function (spec) {
             },
             onFileUnselect() {
                 this.bufferB64 = null;
-                this.ifSelected = false;
             },
             /**
              * @param {Event} evt
@@ -143,7 +145,6 @@ export default function (spec) {
                     const elTitle = document.querySelector(`input[name="${NAME_TITLE}"]`);
                     elTitle.focus();
                 }
-                this.ifSelected = true;
             },
             async onUpload() {
                 this.ifLoading = true;
