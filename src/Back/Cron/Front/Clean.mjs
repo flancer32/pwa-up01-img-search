@@ -108,7 +108,6 @@ export default class App_Back_Cron_Front_Clean {
          */
         this.start = async function () {
             iteration().catch(logger.error);
-            _idTimeout = setTimeout(iteration, TIMEOUT_LOOP);
             logger.info(`The clean up of expired fronts is started.`);
         }
 
