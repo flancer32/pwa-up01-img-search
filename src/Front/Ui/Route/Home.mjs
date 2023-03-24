@@ -5,24 +5,9 @@
  */
 // MODULE'S VARS
 const NS = 'App_Front_Ui_Route_Home';
-const ID_UPLOAD = 'upload';
+const REF_UPLOAD = 'upload';
 
 // MODULE'S FUNCTIONS
-
-/**
- * Load selected file as base64 encoded string (data:image/png;base64,...).
- * @returns {Promise<string>}
- */
-function bufferFile() {
-    return new Promise((resolve, reject) => {
-        const el = document.getElementById(ID_UPLOAD);
-        const file = el.files[0];
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = (evt) => resolve(evt.target.result);
-        reader.onerror = reject;
-    });
-}
 
 /**
  * TeqFW DI factory function to get dependencies for the object.
@@ -36,10 +21,13 @@ export default function (spec) {
     const modImg = spec['App_Front_Mod_Image$'];
     /** @type {App_Front_Ui_Route_Home_A_ListItem.vueCompTmpl} */
     const uiItem = spec['App_Front_Ui_Route_Home_A_ListItem$'];
+    /** @type {App_Front_Ui_Route_Home_A_Upload.vueCompTmpl} */
+    const uiUpload = spec['App_Front_Ui_Route_Home_A_Upload$'];
 
     // VARS
     const template = `
 <div class="col q-gutter-xs">
+    <ui-upload ref="${REF_UPLOAD}"/>
     <div class="row q-gutter-xs  justify-center items-center">
         <div style="width: 200px;">
             <q-input v-model="title"
@@ -61,7 +49,7 @@ export default function (spec) {
     </div>
     <div class="text-center">
         {{info}}
-    </div> 
+    </div>
     <div>
         <div class="gallery flex justify-center q-gutter-md">
             <template v-for="one of items">
@@ -69,10 +57,6 @@ export default function (spec) {
             </template>
         </div>
     </div>
-</div>
-<div style="display: none; flex-direction: column; gap: 10px;">
-    <input id="${ID_UPLOAD}" type="file" v-on:change="onSelectFileChanged">
-    <button v-on:click="onUpload">Upload Image</button>
 </div>
 `;
 
@@ -90,10 +74,9 @@ export default function (spec) {
         teq: {package: DEF.SHARED.NAME},
         name: NS,
         template,
-        components: {uiItem},
+        components: {uiItem, uiUpload},
         data() {
             return {
-                bufUpload: null, // 'data:image/png;base64,...' (TODO: remove buffer)
                 ifLoading: false,
                 info: null,
                 items: [],
@@ -114,30 +97,10 @@ export default function (spec) {
                 this.ifLoading = false;
             },
             async onUpload() {
-                const buffer = await bufferFile();
-                /** @type {App_Shared_Dto_Image.Dto} */
-                const res = await modImg.create(this.title, buffer);
-                if (res?.bid) {
-                    console.dir(res);
-                }
+                /** @type {App_Front_Ui_Route_Home_A_Upload.IUi} */
+                const ui = this.$refs[REF_UPLOAD];
+                ui.show();
             },
-            /**
-             * Load base64 decoded content of the selected file into memory buffer.
-             * @param {ProgressEvent} e
-             */
-            onSelectFileChanged(e) {
-                // const wg = this;
-                // const file = e.target.files[0];
-                // const reader = new FileReader();
-                // reader.readAsDataURL(file);
-                // reader.onload = function (e) {
-                //     debugger;
-                //     wg.bufUpload = e.target.result;
-                // }
-            },
-        },
-        created() {
-
         },
     };
 }

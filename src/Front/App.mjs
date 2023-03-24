@@ -73,7 +73,7 @@ export default class App_Front_App {
                 app.use(quasar, {config: {}});
                 // noinspection JSUnresolvedVariable
                 quasar.iconSet.set(quasar.iconSet.svgMaterialIcons);
-                quasar.lang.set(quasar.lang.ru);
+                quasar.lang.set(quasar.lang.en);
             }
 
             function initRouter(app, DEF, container) {

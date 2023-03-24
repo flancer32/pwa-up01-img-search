@@ -22,3 +22,4 @@
 * Should we store original filenames?
 * How should we inform user about events ('file is uploaded' or on error)?
 * What should be an order for images in the result list (by id desc)?
+* What is a preferred control mode: keyboard, mouse or taps?
