@@ -15,11 +15,10 @@
 
 ## Questions
 
-* What is a type of the app: personal usage of public? Where should we save data - IDB (front) or RDB (back)?
+* What is a type of the app: personal usage of public?
 * What is the limit for an image size?
-* What is the limit for total images count?
+* What is the limit for total images count in the store (filesystem)?
 * Should we store original titles or can we change it to lower case?
 * Should we store original filenames?
-* How should we inform user about events ('file is uploaded' or on error)?
-* What should be an order for images in the result list (by id desc)?
+* What should be an order for images in the result list (by upload date, for example)?
 * What is a preferred control mode: keyboard, mouse or taps?

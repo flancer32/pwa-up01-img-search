@@ -15,7 +15,7 @@ export default function Factory(spec) {
     async function exec() {
         // stop scheduled tasks
         cronFrontClean.stop();
-        logger.info(`Application is stopped.`);
+        logger.info(`Image upload application is stopped.`);
     }
 
     Object.defineProperty(exec, 'namespace', {value: NS});
