@@ -63,34 +63,37 @@ function onFetch(event) {
      * Analyze route's URL and return 'true' if request should not be cached.
      * Always skip requests for images and SSE opening.
      *
-     * @param {Request} req
+     * @param {string} method
+     * @param {URL} url
      * @returns {boolean}
      */
-    function detectBypass(req) {
+    function detectBypass(method, url) {
         const IMG = new RegExp(`(.*)(\\/${DEF_APP.SPACE_IMAGE}\\/)(.*)`);
         const SSE_OPEN = new RegExp(`(.*)(\\/${DEF_WEB_EVT.SPACE_STREAM_OPEN}\\/)(.*)`);
         return !!(
-            req.method === 'POST' ||
-            req.url.match(IMG) ||
-            req.url.match(SSE_OPEN)
+            method === 'POST' ||
+            url.pathname.match(IMG) ||
+            url.pathname.match(SSE_OPEN)
         );
     }
 
-    async function getFromCacheOrFetchAndCache(event) {
+    /**
+     * @param {string} path
+     * @param {Request} request
+     * @returns {Promise<Response>}
+     */
+    async function getFromCacheOrFetchAndCache(path, request) {
         try {
             const cache = await self.caches.open(CACHE_STATIC);
-            const cachedResponse = await cache.match(event.request);
-            const url = new URL(event.request.url);
-            // Get the pathname of the URL
-            const path = url.pathname;
+            const cachedResponse = await cache.match(path);
             if (cachedResponse) {
-                console.log(`from cache: ${path}`);
+                console.log(`[SW] info: loaded from cache: ${path}`);
                 return cachedResponse;
             } else {
                 // wait until resource will be fetched from server and stored in cache
-                const resp = await fetch(event.request);
-                await cache.put(event.request, resp.clone());
-                console.log(`from net, saved to cache: ${path}`);
+                const resp = await fetch(request);
+                await cache.put(path, resp.clone());
+                console.log(`[SW] info: loaded from net, saved to cache: ${path}`);
                 return resp;
             }
         } catch (e) {
@@ -99,10 +102,14 @@ function onFetch(event) {
     }
 
     // MAIN
-    const bypass = detectBypass(event.request);
-    if (bypass === false)
-        event.respondWith(getFromCacheOrFetchAndCache(event));
-
+    const request = event.request;
+    const url = new URL(request.url);
+    const bypass = detectBypass(request.method, url);
+    if (bypass === false) {
+        event.respondWith(getFromCacheOrFetchAndCache(url.pathname, request));
+    } else {
+        console.log(`[SW] info: bypass for '${url.pathname}'.`);
+    }
 }
 
 // MAIN
