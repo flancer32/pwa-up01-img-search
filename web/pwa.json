@@ -1,6 +1,6 @@
 {
   "background_color": "#000000",
-  "description": "$APP_DESC",
+  "description": "Upload images and search Google by image title.",
   "display": "standalone",
   "icons": [
     {
@@ -18,9 +18,9 @@
     }
   ],
   "id": "/",
-  "name": "$APP_NAME",
+  "name": "Image Search",
   "scope": "./",
-  "short_name": "$APP_NAME",
+  "short_name": "Image Search",
   "start_url": "./",
   "theme_color": "#000000"
 }
