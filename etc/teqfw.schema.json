@@ -13,7 +13,13 @@
             },
             "title": {"type": "text", "comment": "Image title to use in searches."},
             "ext": {"type": "string", "comment": "Default extension for the file (by MIME)."},
-            "uuid": {"type": "string", "comment": "UUID as new name for uploaded file."}
+            "uuid": {"type": "string", "comment": "UUID as new name for uploaded file."},
+            "latitude": {
+              "type": "integer", "nullable": true, "comment": "Latitude for geo coordinates (-90*10^6, 90*10^6)."
+            },
+            "longitude": {
+              "type": "integer", "nullable": true, "comment": "Longitude for geo coordinates (-180*10^6, 180*10^6)."
+            }
           },
           "index": {
             "title": {"type": "index", "attrs": ["title"]},

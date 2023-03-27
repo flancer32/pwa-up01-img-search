@@ -46,6 +46,9 @@ export default function (spec) {
         <div>
             <q-btn label="Upload" color="${DEF.COLOR_Q_PRIMARY}" v-on:click="onUpload"/>
         </div>
+        <div>
+            <q-btn label="Test" color="${DEF.COLOR_Q_PRIMARY}" v-on:click="onTest"/>
+        </div>
     </div>
     <div class="text-center">
         {{info}}
@@ -99,11 +102,37 @@ export default function (spec) {
                 this.info = `Total ${this.items.length} items are found.`;
                 this.ifLoading = false;
             },
+            async onTest() {
+                const options = {
+                    enableHighAccuracy: true,
+                    timeout: 5000,
+                    maximumAge: 0
+                };
+
+                function error(err) {
+                    // stealth error message
+                }
+
+                function success(pos) {
+                    console.log(pos.coords.latitude);
+                    console.log(pos.coords.longitude);
+                }
+
+                navigator.geolocation.getCurrentPosition(success, error, options);
+            },
             async onUpload() {
                 /** @type {App_Front_Ui_Route_Home_A_Upload.IUi} */
                 const ui = this.$refs[REF_UPLOAD];
                 ui.show();
             },
+        },
+        created() {
+            const fn = () => {}; // empty function
+            navigator.geolocation.getCurrentPosition(fn, fn, {
+                enableHighAccuracy: true,
+                timeout: 5000,
+                maximumAge: 0
+            });
         },
     };
 }

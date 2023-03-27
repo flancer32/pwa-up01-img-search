@@ -145,7 +145,7 @@ ${user} ALL=(ALL) NOPASSWD: /bin/systemctl stop pwa-${name}.service
 
 ### Log rotation
 
-To rotate `/home/${user}/log/${name}/out.log` file create log rotate configuration in  `/etc/logrotate.d/pwa-${name}`:
+Create this configuration in `/etc/logrotate.d/pwa-${name}` to rotate `/home/${user}/log/${name}/out.log` file:
 
 ```
 /home/${user}/log/${name}/out.log {
