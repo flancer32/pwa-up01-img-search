@@ -163,3 +163,13 @@ To rotate `/home/${user}/log/${name}/out.log` file create log rotate configurati
     endscript
 }
 ```
+
+## CLI commands
+
+Remove image from RDB & filesystem (by backendID, by UUID, all):
+
+```shell
+$ ./bin/tequila.mjs app-image-remove -b <bid>
+$ ./bin/tequila.mjs app-image-remove -u <uuid>
+$ ./bin/tequila.mjs app-image-remove --all
+```

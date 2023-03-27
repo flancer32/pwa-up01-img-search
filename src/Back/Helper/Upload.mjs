@@ -3,7 +3,7 @@
  */
 // MODULE'S IMPORT
 import {isAbsolute, join} from 'node:path';
-import {existsSync, mkdirSync} from 'node:fs';
+import {existsSync, mkdirSync, rmSync} from 'node:fs';
 
 // MODULE'S CLASSES
 export default class App_Back_Helper_Upload {
@@ -13,8 +13,11 @@ export default class App_Back_Helper_Upload {
         const DEF = spec['App_Back_Defaults$'];
         /** @type {TeqFw_Core_Back_Config} */
         const config = spec['TeqFw_Core_Back_Config$'];
+        /** @type {TeqFw_Core_Shared_Api_Logger} */
+        const logger = spec['TeqFw_Core_Shared_Api_Logger$$']; // instance
 
         // VARS
+        logger.setNamespace(this.constructor.name);
         const _root = composeUploadRoot();
 
         // FUNCS
@@ -33,6 +36,16 @@ export default class App_Back_Helper_Upload {
         }
 
         // INSTANCE METHODS
+
+        this.clearUploads = function () {
+            try {
+                rmSync(_root, {recursive: true});
+                mkdirSync(_root, {recursive: true});
+                logger.info(`Uploads root '${_root}' is recreated.`)
+            } catch (e) {
+                logger.error(e);
+            }
+        }
         /**
          * Convert `uuid` for uploaded file to absolute path:
          *   'fc35a08c-...48.png' => '/store/uploads/f/c/fc35a08c-...48.png'

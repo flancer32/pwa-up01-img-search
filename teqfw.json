@@ -6,6 +6,9 @@
     }
   },
   "@teqfw/core": {
+    "commands": [
+      "App_Back_Cli_Image_Remove"
+    ],
     "plugin": {
       "onInit": "App_Back_Plugin_Init",
       "onStop": "App_Back_Plugin_Stop"

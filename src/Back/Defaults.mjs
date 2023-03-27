@@ -3,6 +3,8 @@
  */
 export default class App_Back_Defaults {
 
+    CLI_PREFIX = 'app';
+
     /** @type {TeqFw_Web_Back_Defaults} */
     MOD_WEB;
 
