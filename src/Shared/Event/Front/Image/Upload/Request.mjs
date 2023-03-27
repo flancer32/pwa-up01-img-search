@@ -16,6 +16,16 @@ class Dto {
      */
     b64Image;
     /**
+     * Latitude for geo position.
+     * @type {number}
+     */
+    latitude;
+    /**
+     * Longitude for geo position.
+     * @type {number}
+     */
+    longitude;
+    /**
      * Title to use in search.
      * @type {string}
      */
@@ -30,6 +40,8 @@ export default class App_Shared_Event_Front_Image_Upload_Request {
         // DEPS
         /** @type {TeqFw_Core_Shared_Util_Cast.castString|function} */
         const castString = spec['TeqFw_Core_Shared_Util_Cast.castString'];
+        /** @type {TeqFw_Core_Shared_Util_Cast.castDecimal|function} */
+        const castDecimal = spec['TeqFw_Core_Shared_Util_Cast.castDecimal'];
 
         // INSTANCE METHODS
         /**
@@ -41,6 +53,8 @@ export default class App_Shared_Event_Front_Image_Upload_Request {
             const res = Object.assign(new Dto(), data);
             // cast known attributes
             res.b64Image = castString(data?.b64Image);
+            res.latitude = castDecimal(data?.latitude);
+            res.longitude = castDecimal(data?.longitude);
             res.title = castString(data?.title);
             return res;
         }

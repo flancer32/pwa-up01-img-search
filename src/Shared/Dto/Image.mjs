@@ -35,6 +35,16 @@ class Dto {
      */
     ext;
     /**
+     * Latitude for geo position.
+     * @type {number}
+     */
+    latitude;
+    /**
+     * Longitude for geo position.
+     * @type {number}
+     */
+    longitude;
+    /**
      * Image title to use in searches.
      * @type {string}
      */
@@ -56,6 +66,8 @@ export default class App_Shared_Dto_Image {
         const castDate = spec['TeqFw_Core_Shared_Util_Cast.castDate'];
         /** @type {TeqFw_Core_Shared_Util_Cast.castInt|function} */
         const castInt = spec['TeqFw_Core_Shared_Util_Cast.castInt'];
+        /** @type {TeqFw_Core_Shared_Util_Cast.castDecimal|function} */
+        const castDecimal = spec['TeqFw_Core_Shared_Util_Cast.castDecimal'];
         /** @type {TeqFw_Core_Shared_Util_Cast.castString|function} */
         const castString = spec['TeqFw_Core_Shared_Util_Cast.castString'];
 
@@ -71,6 +83,8 @@ export default class App_Shared_Dto_Image {
             res.bid = castInt(data?.bid);
             res.dateCreated = castDate(data?.dateCreated);
             res.ext = castString(data?.ext);
+            res.latitude = castDecimal(data?.latitude);
+            res.longitude = castDecimal(data?.longitude);
             res.title = castString(data?.title);
             res.uuid = castString(data?.uuid);
             return res;

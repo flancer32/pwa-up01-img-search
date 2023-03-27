@@ -4,6 +4,10 @@
 export default class App_Back_Convert_Image {
     constructor(spec) {
         // DEPS
+        /** @type {App_Shared_Util.geoDec2Int|function} */
+        const geoDec2Int = spec['App_Shared_Util.geoDec2Int'];
+        /** @type {App_Shared_Util.geoInt2Dec|function} */
+        const geoInt2Dec = spec['App_Shared_Util.geoInt2Dec'];
         /** @type {TeqFw_Core_Shared_Util_Cast.castDate|function} */
         const castDate = spec['TeqFw_Core_Shared_Util_Cast.castDate'];
         /** @type {TeqFw_Core_Shared_Util_Cast.castInt|function} */
@@ -26,6 +30,8 @@ export default class App_Back_Convert_Image {
             res.bid = castInt(data?.bid);
             res.dateCreated = castDate(data?.date_created);
             res.ext = castString(data?.ext);
+            res.latitude = geoInt2Dec(data?.latitude);
+            res.longitude = geoInt2Dec(data?.longitude);
             res.title = castString(data?.title);
             res.uuid = castString(data?.uuid);
             return res;
@@ -40,6 +46,8 @@ export default class App_Back_Convert_Image {
             res.bid = castInt(data?.bid);
             res.date_created = castDate(data?.dateCreated);
             res.ext = castString(data?.ext);
+            res.latitude = geoDec2Int(data?.latitude);
+            res.longitude = geoDec2Int(data?.longitude);
             res.title = castString(data?.title);
             res.uuid = castString(data?.uuid);
             return res;

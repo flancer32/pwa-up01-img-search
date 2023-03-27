@@ -18,6 +18,8 @@ const ATTR = {
     BID: 'bid',
     DATE_CREATED: 'date_created',
     EXT: 'ext',
+    LATITUDE: 'latitude',
+    LONGITUDE: 'longitude',
     TITLE: 'title',
     UUID: 'uuid',
 };
@@ -40,6 +42,16 @@ class Dto {
      * @type {string}
      */
     ext;
+    /**
+     * Latitude for geo coordinates (-90*10^6, 90*10^6).
+     * @type {number}
+     */
+    latitude;
+    /**
+     * Longitude for geo coordinates (-180*10^6, 180*10^6).
+     * @type {number}
+     */
+    longitude;
     /**
      * Image title to use in searches.
      * @type {string}
@@ -80,6 +92,8 @@ export default class App_Back_RDb_Schema_Image {
             res.bid = castInt(data?.bid);
             res.date_created = castDate(data?.date_created);
             res.ext = castString(data?.ext);
+            res.latitude = castInt(data?.latitude);
+            res.longitude = castInt(data?.longitude);
             res.title = castString(data?.title);
             res.uuid = castString(data?.uuid);
             return res;

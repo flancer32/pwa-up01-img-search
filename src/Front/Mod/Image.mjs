@@ -29,13 +29,17 @@ export default class App_Front_Mod_Image {
          * Upload base64 encoded image to backend and return image DTO after image registration in DB.
          * @param {string} title
          * @param {string} base64
+         * @param {number} lat latitude (-90, 90)
+         * @param {number} long longitude (-180, 180)
          * @returns {Promise<App_Shared_Dto_Image.Dto>}
          */
-        this.create = async function (title, base64) {
+        this.create = async function (title, base64, lat, long) {
             try {
                 const req = esfReqUpload.createDto();
                 req.b64Image = base64;
                 req.title = title;
+                req.latitude = lat;
+                req.longitude = long;
                 /** @type {App_Shared_Event_Back_Image_Upload_Response.Dto} */
                 const rs = await callTrans(req, esbResUpload);
                 return (rs?.item) ? rs.item : null;

@@ -11,6 +11,8 @@ export default class App_Back_Listen_Trans_Image_Upload {
         // DEPS
         /** @type {TeqFw_Core_Shared_Api_Logger} */
         const logger = spec['TeqFw_Core_Shared_Api_Logger$$']; // instance
+        /** @type {App_Shared_Util.geoDec2Int|function} */
+        const geoDec2Int = spec['App_Shared_Util.geoDec2Int'];
         /** @type {TeqFw_Web_Event_Back_Mod_Channel} */
         const eventsBack = spec['TeqFw_Web_Event_Back_Mod_Channel$'];
         /** @type {TeqFw_Web_Event_Back_Mod_Portal_Front} */
@@ -61,6 +63,8 @@ export default class App_Back_Listen_Trans_Image_Upload {
                 // normalize data
                 const title = dataIn?.title;
                 const b64 = dataIn?.b64Image;
+                const latitude = geoDec2Int(dataIn?.latitude);
+                const longitude = geoDec2Int(dataIn?.longitude);
                 //
                 const uuid = randomUUID();
                 const {ext, body} = splitB64(b64);
@@ -70,6 +74,8 @@ export default class App_Back_Listen_Trans_Image_Upload {
                 const dto = rdbImage.createDto();
                 dto.uuid = uuid;
                 dto.ext = ext;
+                dto.latitude = latitude;
+                dto.longitude = longitude;
                 dto.title = title; //.toLowerCase();
                 const {[A_IMG.BID]: bid} = await crud.create(trx, rdbImage, dto);
                 /** @type {App_Back_RDb_Schema_Image.Dto} */

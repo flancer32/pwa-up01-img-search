@@ -147,9 +147,36 @@ export default function (spec) {
                 }
             },
             async onUpload() {
+                // FUNCS
+                function getCoordinates() {
+                    return new Promise((resolve) => {
+                        let res = {lat: null, long: null};
+                        const options = {
+                            enableHighAccuracy: true,
+                            timeout: 5000,
+                            maximumAge: 300000
+                        };
+
+                        function error() {
+                            // stealth error message
+                            resolve(res);
+                        }
+
+                        function success(pos) {
+                            res.lat = pos?.coords?.latitude;
+                            res.long = pos?.coords?.longitude;
+                            resolve(res);
+                        }
+
+                        navigator.geolocation.getCurrentPosition(success, error, options);
+                    });
+                }
+
+                // MAIN
                 this.ifLoading = true;
+                const geo = await getCoordinates();
                 /** @type {App_Shared_Dto_Image.Dto} */
-                const res = await modImg.create(this.title, this.bufferB64);
+                const res = await modImg.create(this.title, this.bufferB64, geo.lat, geo.long);
                 if (res?.bid) {
                     console.dir(res);
                     this.hide();
