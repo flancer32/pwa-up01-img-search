@@ -5,6 +5,7 @@
  */
 // MODULE'S VARS
 const NS = 'App_Front_Ui_Route_Home_A_ListItem';
+const EVT_CLICK = 'onClick';
 
 // MODULE'S FUNCTIONS
 /**
@@ -18,10 +19,10 @@ export default function (spec) {
 
     // VARS
     const template = `
-<q-card>
+<q-card class="cursor-pointer q-pa-xs" v-on:click="onClick">
     <div class="title">{{item.title}}</div>
     <div>
-        <a :href="uiSearchHref" target="_blank"><img :src="uiImgSource" :alt="item.title"/></a>
+        <img :src="uiImgSource" :alt="item.title"/>
     </div>
 </q-card>
 `;
@@ -59,9 +60,10 @@ export default function (spec) {
                 return `https://www.google.com/search?q=${norm}`;
             },
         },
-        methods: {},
-        created() {
-
+        methods: {
+            onClick() {
+                this.$emit(EVT_CLICK, this.item);
+            },
         },
     };
 }

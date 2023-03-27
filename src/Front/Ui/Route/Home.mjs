@@ -5,6 +5,7 @@
  */
 // MODULE'S VARS
 const NS = 'App_Front_Ui_Route_Home';
+const REF_DISPLAY = 'display';
 const REF_UPLOAD = 'upload';
 
 // MODULE'S FUNCTIONS
@@ -21,12 +22,15 @@ export default function (spec) {
     const modImg = spec['App_Front_Mod_Image$'];
     /** @type {App_Front_Ui_Route_Home_A_ListItem.vueCompTmpl} */
     const uiItem = spec['App_Front_Ui_Route_Home_A_ListItem$'];
+    /** @type {App_Front_Ui_Route_Home_A_Display.vueCompTmpl} */
+    const uiDisplay = spec['App_Front_Ui_Route_Home_A_Display$'];
     /** @type {App_Front_Ui_Route_Home_A_Upload.vueCompTmpl} */
     const uiUpload = spec['App_Front_Ui_Route_Home_A_Upload$'];
 
     // VARS
     const template = `
 <div class="col q-gutter-xs">
+    <ui-display ref="${REF_DISPLAY}"/>
     <ui-upload ref="${REF_UPLOAD}"/>
     <div class="row q-gutter-xs  justify-center items-center">
         <div style="width: 200px;">
@@ -46,9 +50,6 @@ export default function (spec) {
         <div>
             <q-btn label="Upload" color="${DEF.COLOR_Q_PRIMARY}" v-on:click="onUpload"/>
         </div>
-        <div>
-            <q-btn label="Test" color="${DEF.COLOR_Q_PRIMARY}" v-on:click="onTest"/>
-        </div>
     </div>
     <div class="text-center">
         {{info}}
@@ -56,7 +57,7 @@ export default function (spec) {
     <div class="hGallery">
         <div class="gallery flex justify-center q-gutter-md">
             <template v-for="one of items">
-                <ui-item :item="one"/>
+                <ui-item :item="one" @onClick="doClick"/>
             </template>
         </div>
     </div>
@@ -80,7 +81,7 @@ export default function (spec) {
         teq: {package: DEF.SHARED.NAME},
         name: NS,
         template,
-        components: {uiItem, uiUpload},
+        components: {uiItem, uiDisplay, uiUpload},
         data() {
             return {
                 ifLoading: false,
@@ -90,6 +91,11 @@ export default function (spec) {
             };
         },
         methods: {
+            doClick(item) {
+                /** @type {App_Front_Ui_Route_Home_A_Display.IUi} */
+                const ui = this.$refs[REF_DISPLAY];
+                ui.show(item);
+            },
             async onSearch() {
                 this.ifLoading = true;
                 const rs = await modImg.list(this.title);
@@ -102,37 +108,11 @@ export default function (spec) {
                 this.info = `Total ${this.items.length} items are found.`;
                 this.ifLoading = false;
             },
-            async onTest() {
-                const options = {
-                    enableHighAccuracy: true,
-                    timeout: 5000,
-                    maximumAge: 0
-                };
-
-                function error(err) {
-                    // stealth error message
-                }
-
-                function success(pos) {
-                    console.log(pos.coords.latitude);
-                    console.log(pos.coords.longitude);
-                }
-
-                navigator.geolocation.getCurrentPosition(success, error, options);
-            },
             async onUpload() {
                 /** @type {App_Front_Ui_Route_Home_A_Upload.IUi} */
                 const ui = this.$refs[REF_UPLOAD];
                 ui.show();
             },
-        },
-        created() {
-            const fn = () => {}; // empty function
-            navigator.geolocation.getCurrentPosition(fn, fn, {
-                enableHighAccuracy: true,
-                timeout: 5000,
-                maximumAge: 0
-            });
         },
     };
 }

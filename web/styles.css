@@ -19,8 +19,8 @@ HTML, BODY {
     color: white;
 }
 
+/* HOME / GALLERY */
 .gallery IMG {
-    border: 1px solid #333;
     max-width: 150px;
     max-height: 150px;
     margin: auto;
@@ -28,4 +28,26 @@ HTML, BODY {
 
 .gallery DIV {
     text-align: center;
+}
+
+/* HOME / DISPLAY */
+.img-display .header {
+    display: grid;
+    font-size: larger;
+    grid-template-columns: 1fr auto;
+}
+
+.img-display IMG {
+    max-width: min(100%, 80vw);
+    max-height: min(100%, 80vh);
+    margin: auto;
+}
+
+/* HOME / UPLOAD */
+
+.img-upload .header {
+    background-color: var(--q-primary);
+    color: var(--color-set-lightest);
+    display: grid;
+    grid-template-columns: 1fr auto;
 }

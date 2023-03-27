@@ -36,9 +36,9 @@ export default function (spec) {
     // VARS
     const template = `
 <q-dialog ref="${REF_SELF}">
-    <q-card>
+    <q-card class="img-upload">
         <ui-spinner :loading="ifLoading"/>
-        <q-card-section class="bg-primary text-white" style="display: grid; grid-template-columns: 1fr auto;">
+        <q-card-section class="header">
             <div class="">Upload New Image</div>
             <div class="cursor-pointer">
                 <div v-if="!ifSelected">
@@ -81,9 +81,6 @@ export default function (spec) {
 </q-dialog>
 `;
 
-    // FUNCS
-
-
     // MAIN
     /**
      * Template to create new component instances using Vue.
@@ -103,7 +100,6 @@ export default function (spec) {
                 title: null,
             };
         },
-        props: {},
         computed: {
             ifCanUpload() {
                 return Boolean(this.title) && this.ifSelected;
