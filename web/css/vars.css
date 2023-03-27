@@ -17,3 +17,15 @@
     --size-xl: 15px;
     --size-xs: 2px;
 }
+
+/* Overwrite Quasar UI styles */
+:root {
+    /*--q-dark: var(--color-set-darkest);*/
+    /*--q-primary: var(--color-set-base);*/
+    /*--q-accent: #9C27B0;*/
+    /*--q-info: #31CCEC;*/
+    /*--q-negative: #C10015;*/
+    /*--q-positive: #21BA45;*/
+    /*--q-secondary: #26A69A;*/
+    /*--q-warning: #F2C037;*/
+}

@@ -50,13 +50,16 @@ export default function (spec) {
     <div class="text-center">
         {{info}}
     </div>
-    <div>
+    <div class="hGallery">
         <div class="gallery flex justify-center q-gutter-md">
             <template v-for="one of items">
                 <ui-item :item="one"/>
             </template>
         </div>
     </div>
+</div>
+<div class="footer">
+    <a href="https://wiredgeese.com/" target="_blank">developed by Wiredgeese Devs</a>
 </div>
 `;
 
