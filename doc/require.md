@@ -15,10 +15,3 @@
 
 ## Questions
 
-* What is a type of the app: personal usage of public?
-* What is the limit for an image size?
-* What is the limit for total images count in the store (filesystem)?
-* Should we store original titles or can we change it to lower case?
-* Should we store original filenames?
-* What should be an order for images in the result list (by upload date, for example)?
-* What is a preferred control mode: keyboard, mouse or taps?

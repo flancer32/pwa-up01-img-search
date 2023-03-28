@@ -5,6 +5,8 @@
 export default class App_Back_Listen_Trans_Image_List {
     constructor(spec) {
         // DEPS
+        /** @type {App_Back_Defaults} */
+        const DEF = spec['App_Back_Defaults$'];
         /** @type {TeqFw_Core_Shared_Api_Logger} */
         const logger = spec['TeqFw_Core_Shared_Api_Logger$$']; // instance
         /** @type {TeqFw_Web_Event_Back_Mod_Channel} */
@@ -35,9 +37,6 @@ export default class App_Back_Listen_Trans_Image_List {
          * @param {TeqFw_Web_Event_Shared_Dto_Event_Meta_Trans.Dto} metaIn
          */
         async function handler({data: dataIn, meta: metaIn}) {
-            // FUNCS
-
-            // MAIN
             const data = esbRes.createDto();
             const {meta} = portalFront.createMessage();
             meta.sessionUuid = metaIn.sessionUuid;
@@ -51,7 +50,9 @@ export default class App_Back_Listen_Trans_Image_List {
                 const where = (key)
                     ? (b) => b.whereLike(trx.raw(`LOWER(${A_IMG.TITLE})`), `%${key.trim().toLowerCase()}%`)
                     : null;
-                const rs = await crud.readSet(trx, rdbImage, where);
+                const order = [{column: A_IMG.DATE_CREATED, order: 'desc'}];
+                const limit = DEF.SHARED.LIST_LIMIT;
+                const rs = await crud.readSet(trx, rdbImage, where, null, order, limit);
                 const items = [];
                 for (const one of rs) items.push(convImage.rdb2share(one));
                 data.items = items;
