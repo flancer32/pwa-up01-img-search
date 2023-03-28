@@ -29,7 +29,8 @@
     "@teqfw/vue": "github:teqfw/vue",
     "@teqfw/web": "github:teqfw/web",
     "@teqfw/web-event": "github:teqfw/web-event",
-    "pg": "^8"
+    "pg": "^8",
+    "sharp": "^0.32.0"
   },
   "devDependencies": {
     "mocha": "*"

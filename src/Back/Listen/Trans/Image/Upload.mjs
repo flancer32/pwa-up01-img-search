@@ -29,6 +29,8 @@ export default class App_Back_Listen_Trans_Image_Upload {
         const rdbImage = spec['App_Back_RDb_Schema_Image$'];
         /** @type {App_Shared_Dto_Image} */
         const dtoImage = spec['App_Shared_Dto_Image$'];
+        /** @type {App_Back_Act_Image_Resize.act|function} */
+        const actResize = spec['App_Back_Act_Image_Resize$'];
         /** @type {App_Back_Act_Image_Save.act|function} */
         const actSave = spec['App_Back_Act_Image_Save$'];
 
@@ -70,6 +72,7 @@ export default class App_Back_Listen_Trans_Image_Upload {
                 const {ext, body} = splitB64(b64);
                 // save data to filesystem
                 await actSave({uuid, ext, body});
+                await actResize({uuid, ext});
                 // save data to RDB
                 const dto = rdbImage.createDto();
                 dto.uuid = uuid;
