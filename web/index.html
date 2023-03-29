@@ -35,9 +35,6 @@
         if ('serviceWorker' in navigator) {
             // Register Service Worker on page load (if not registered before)
             self.addEventListener('load', async () => {
-                // IMPORT (see `node_modules/@teqfw/web/web/js/install.mjs`)
-                const {bootstrap} = await import('./web/@teqfw/web/js/bootstrap.mjs');
-
                 // VARS
                 const urlSw = 'sw.js';
                 const nsApp = 'App_Front_App';
@@ -57,9 +54,18 @@
                 }
 
                 // MAIN
-                bootstrap(fnLog, fnProgress, urlSw, nsApp, cssApp).catch((e) => {
-                    debugger
-                });
+                try {
+                    // see `node_modules/@teqfw/web/web/js/install.mjs`
+                    const {bootstrap} = await import('./web/@teqfw/web/js/bootstrap.mjs');
+                    bootstrap(fnLog, fnProgress, urlSw, nsApp, cssApp).catch((e) => {
+                        fnLog(e?.message);
+                    });
+                } catch (e) {
+                    if (e?.message.includes('Failed to fetch dynamically imported module'))
+                        fnLog(`Server is down. Please, try reload the app later.`);
+                    else
+                        fnLog(e?.message);
+                }
             });
         }
     </script>
