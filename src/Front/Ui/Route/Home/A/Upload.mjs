@@ -44,7 +44,7 @@ export default function (spec) {
             <div class="">Upload New Image</div>
             <div class="cursor-pointer">
                 <div v-if="!ifSelected">
-                    <q-icon name="add" size="sm" v-on:click="onFileSelect">
+                    <q-icon name="add_circle" size="sm" v-on:click="onFileSelect">
                 </div>
                 <div v-if="ifSelected">
                     <q-icon name="delete" size="sm" v-on:click="onFileUnselect">
@@ -55,10 +55,8 @@ export default function (spec) {
             <input id="${ID_UPLOAD}" type="file" tabindex="-1" hidden v-on:change="onSelectFileChanged">
             <!-- image -->
             <div class="text-center">
-                <img :src="bufferB64"
-                     :hidden="!ifSelected"
+                <img :src="uiImgSrc"
                      alt="Uploaded Image"
-                     style="max-width: 120px; max-height: 120px; border: 1px solid black;"
                 >
             </div>
             <!-- title -->
@@ -108,6 +106,10 @@ export default function (spec) {
             },
             ifSelected() {
                 return Boolean(this.bufferB64);
+            },
+            uiImgSrc() {
+                if (this.bufferB64) return this.bufferB64;
+                else return './img/placeholder.png';
             },
         },
         /**

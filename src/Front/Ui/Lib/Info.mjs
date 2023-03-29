@@ -35,7 +35,7 @@ export default function (spec) {
     const template = `
 <q-dialog ref="${REF_SELF}" position="bottom">
     <div class="info-container">
-        <q-card style="width: 80vw;">
+        <q-card class="info-card">
             <q-card-section class="text-center">
                 {{message}}
             </q-card-section>
@@ -74,7 +74,7 @@ export default function (spec) {
                 // fire up Quasar dial
                 this.$refs[REF_SELF].show();
                 // delayed hide
-                setTimeout(() => this.hide(), TIMEOUT_HIDE);
+                setTimeout(() => this.hide(), TIMEOUT_HIDE*100);
             },
         },
     };

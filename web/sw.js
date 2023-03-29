@@ -18,6 +18,7 @@ const FILES_TO_CACHE = [
     './img/favicon-192.png',
     './img/favicon-512.png',
     './img/loading.gif',
+    './img/placeholder.png',
     './index.html',
     './pwa.json',
     './styles.css',
@@ -87,13 +88,11 @@ function onFetch(event) {
             const cache = await self.caches.open(CACHE_STATIC);
             const cachedResponse = await cache.match(path);
             if (cachedResponse) {
-                console.log(`[SW] info: loaded from cache: ${path}`);
                 return cachedResponse;
             } else {
                 // wait until resource will be fetched from server and stored in cache
                 const resp = await fetch(request);
                 await cache.put(path, resp.clone());
-                console.log(`[SW] info: loaded from net, saved to cache: ${path}`);
                 return resp;
             }
         } catch (e) {
@@ -104,12 +103,9 @@ function onFetch(event) {
     // MAIN
     const request = event.request;
     const url = new URL(request.url);
+    // don't cache images and SSE opening requests
     const bypass = detectBypass(request.method, url);
-    if (bypass === false) {
-        event.respondWith(getFromCacheOrFetchAndCache(url.pathname, request));
-    } else {
-        console.log(`[SW] info: bypass for '${url.pathname}'.`);
-    }
+    if (bypass === false) event.respondWith(getFromCacheOrFetchAndCache(url.pathname, request));
 }
 
 // MAIN

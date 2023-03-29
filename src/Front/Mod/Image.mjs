@@ -5,6 +5,8 @@
 export default class App_Front_Mod_Image {
     constructor(spec) {
         // DEPS
+        /** @type {App_Front_Defaults} */
+        const DEF = spec['App_Front_Defaults$'];
         /** @type {TeqFw_Core_Shared_Api_Logger} */
         const logger = spec['TeqFw_Core_Shared_Api_Logger$$']; // instance
         /** @type {TeqFw_Web_Event_Front_Act_Trans_Call.act|function} */
@@ -41,7 +43,7 @@ export default class App_Front_Mod_Image {
                 req.latitude = lat;
                 req.longitude = long;
                 /** @type {App_Shared_Event_Back_Image_Upload_Response.Dto} */
-                const rs = await callTrans(req, esbResUpload);
+                const rs = await callTrans(req, esbResUpload, {timeout: DEF.TIMEOUT_RESPONSE});
                 return (rs?.item) ? rs.item : null;
             } catch (e) {
                 // timeout or error

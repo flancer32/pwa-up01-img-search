@@ -39,7 +39,7 @@ HTML, BODY {
 
 .img-display IMG {
     max-width: min(100%, 80vw);
-    max-height: min(100%, 80vh);
+    max-height: 65vh;
     margin: auto;
 }
 
@@ -52,10 +52,19 @@ HTML, BODY {
     grid-template-columns: 1fr auto;
 }
 
+.img-upload IMG {
+    max-width: min(80%, 60vw);
+    max-height: 60vh;
+}
+
 /* INFO */
 .info-container {
     display: grid;
     grid-template-columns: 1fr;
     justify-items: center;
     padding-bottom: 5vh;
+}
+
+.info-container .info-card {
+    max-width: min(80%, 60vw);
 }
