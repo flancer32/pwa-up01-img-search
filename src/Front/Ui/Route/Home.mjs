@@ -6,6 +6,7 @@
 // MODULE'S VARS
 const NS = 'App_Front_Ui_Route_Home';
 const REF_DISPLAY = 'display';
+const REF_INFO = 'info';
 const REF_UPLOAD = 'upload';
 
 // MODULE'S FUNCTIONS
@@ -20,17 +21,22 @@ export default function (spec) {
     const DEF = spec['App_Front_Defaults$'];
     /** @type {App_Front_Mod_Image} */
     const modImg = spec['App_Front_Mod_Image$'];
+    /** @type {App_Front_Ui_Lib_Info.vueCompTmpl} */
+    const uiInfo = spec['App_Front_Ui_Lib_Info$'];
     /** @type {App_Front_Ui_Route_Home_A_ListItem.vueCompTmpl} */
     const uiItem = spec['App_Front_Ui_Route_Home_A_ListItem$'];
     /** @type {App_Front_Ui_Route_Home_A_Display.vueCompTmpl} */
     const uiDisplay = spec['App_Front_Ui_Route_Home_A_Display$'];
     /** @type {App_Front_Ui_Route_Home_A_Upload.vueCompTmpl} */
     const uiUpload = spec['App_Front_Ui_Route_Home_A_Upload$'];
+    /** @type {App_Front_Widget_Info} */
+    const wgInfo = spec['App_Front_Widget_Info$'];
 
     // VARS
     const template = `
 <div class="col q-gutter-xs">
     <ui-display ref="${REF_DISPLAY}"/>
+    <ui-info ref="${REF_INFO}"/>
     <ui-upload ref="${REF_UPLOAD}"/>
     <div class="row q-gutter-xs  justify-center items-center">
         <div style="width: 200px;">
@@ -81,7 +87,7 @@ export default function (spec) {
         teq: {package: DEF.SHARED.NAME},
         name: NS,
         template,
-        components: {uiItem, uiDisplay, uiUpload},
+        components: {uiInfo, uiItem, uiDisplay, uiUpload},
         data() {
             return {
                 ifLoading: false,
@@ -113,6 +119,11 @@ export default function (spec) {
                 const ui = this.$refs[REF_UPLOAD];
                 ui.show();
             },
+        },
+        mounted() {
+            // store UI component into widget
+            wgInfo.set(this.$refs[REF_INFO]);
+
         },
     };
 }

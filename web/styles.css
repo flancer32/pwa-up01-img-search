@@ -51,3 +51,11 @@ HTML, BODY {
     display: grid;
     grid-template-columns: 1fr auto;
 }
+
+/* INFO */
+.info-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    padding-bottom: 5vh;
+}

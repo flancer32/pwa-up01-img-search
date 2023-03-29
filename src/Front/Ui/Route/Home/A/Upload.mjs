@@ -32,6 +32,8 @@ export default function (spec) {
     const modImg = spec['App_Front_Mod_Image$'];
     /** @type {TeqFw_Ui_Quasar_Front_Lib_Spinner.vueCompTmpl} */
     const uiSpinner = spec['TeqFw_Ui_Quasar_Front_Lib_Spinner$'];
+    /** @type {App_Front_Widget_Info} */
+    const wgInfo = spec['App_Front_Widget_Info$'];
 
     // VARS
     const template = `
@@ -174,8 +176,10 @@ export default function (spec) {
                 /** @type {App_Shared_Dto_Image.Dto} */
                 const res = await modImg.create(this.title, this.bufferB64, geo.lat, geo.long);
                 if (res?.bid) {
-                    console.dir(res);
+                    wgInfo.get().show(`New image is uploaded (#${res.bid}).`);
                     this.hide();
+                } else {
+                    wgInfo.get().show(`Cannot upload new image.`);
                 }
                 this.ifLoading = false;
             },
