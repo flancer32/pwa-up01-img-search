@@ -6,9 +6,17 @@ PWA to upload images to server and to search Google with images titles as a keys
 
 ## Installation
 
-Install application in 'development' or 'demo' mode:
+Clone repository:
 
 ```shell
+$ git clone git@github.com:flancer32/pwa-up01-img-search.git
+$ cd ./pwa-up01-img-search
+```
+
+Install application in 'live', 'development' or 'demo' mode:
+
+```shell
+$ ./bin/deploy/live.sh
 $ ./bin/deploy/dev.sh
 $ ./bin/deploy/demo.sh
 ```
