@@ -74,7 +74,7 @@ export default function (spec) {
                 // fire up Quasar dial
                 this.$refs[REF_SELF].show();
                 // delayed hide
-                setTimeout(() => this.hide(), TIMEOUT_HIDE*100);
+                setTimeout(() => this.hide(), TIMEOUT_HIDE);
             },
         },
     };
