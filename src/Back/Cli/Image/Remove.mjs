@@ -36,8 +36,8 @@ export default function Factory(spec) {
     const fOpt = spec['TeqFw_Core_Back_Api_Dto_Command_Option#Factory$'];
     /** @type {TeqFw_Db_Back_RDb_IConnect} */
     const conn = spec['TeqFw_Db_Back_RDb_IConnect$'];
-    /** @type {TeqFw_Db_Back_Api_RDb_ICrudEngine} */
-    const crud = spec['TeqFw_Db_Back_Api_RDb_ICrudEngine$'];
+    /** @type {TeqFw_Db_Back_Api_RDb_CrudEngine} */
+    const crud = spec['TeqFw_Db_Back_Api_RDb_CrudEngine$'];
     /** @type {App_Back_RDb_Schema_Image} */
     const rdbImage = spec['App_Back_RDb_Schema_Image$'];
     /** @type {App_Back_Helper_Upload} */

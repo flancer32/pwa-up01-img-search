@@ -19,8 +19,8 @@ export default class App_Back_Listen_Trans_Image_List {
         const esbRes = spec['App_Shared_Event_Back_Image_List_Response$'];
         /** @type {TeqFw_Db_Back_RDb_IConnect} */
         const conn = spec['TeqFw_Db_Back_RDb_IConnect$'];
-        /** @type {TeqFw_Db_Back_Api_RDb_ICrudEngine} */
-        const crud = spec['TeqFw_Db_Back_Api_RDb_ICrudEngine$'];
+        /** @type {TeqFw_Db_Back_Api_RDb_CrudEngine} */
+        const crud = spec['TeqFw_Db_Back_Api_RDb_CrudEngine$'];
         /** @type {App_Back_RDb_Schema_Image} */
         const rdbImage = spec['App_Back_RDb_Schema_Image$'];
         /** @type {App_Back_Convert_Image} */
