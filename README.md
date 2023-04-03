@@ -6,6 +6,11 @@ PWA to upload images to server and to search Google with images titles as a keys
 
 ## Installation
 
+Requirements:
+
+* Node.js 17+
+* npm 9+
+
 Clone repository:
 
 ```shell

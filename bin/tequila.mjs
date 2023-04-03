@@ -2,16 +2,16 @@
 'use strict';
 /** Main script to create and to run TeqFW backend application. */
 // IMPORT
-import {dirname, join} from 'node:path';
+import {dirname, join, normalize} from 'node:path';
 import Container from '@teqfw/di';
 import {readFileSync} from "node:fs";
+import {platform} from "node:process";
 
 // VARS
-/* Resolve paths to main folders */
+/* Resolve paths to root folder */
 const url = new URL(import.meta.url);
-const script = url.pathname;
-const bin = dirname(script);
-const root = join(bin, '..');
+const bin = dirname(url.pathname);
+const root = normalize(join(bin, '..').replace(/^\\/, '')); // remove leading backslash for Win
 
 // FUNCS
 /**
@@ -22,6 +22,7 @@ const root = join(bin, '..');
 function initContainer(root) {
     /** @type {TeqFw_Di_Shared_Container} */
     const res = new Container();
+    res.getNsResolver().isWindows = (platform === 'win32');
     const pathDi = join(root, 'node_modules/@teqfw/di/src');
     const pathCore = join(root, 'node_modules/@teqfw/core/src');
     res.addSourceMapping('TeqFw_Di', pathDi, true, 'mjs');

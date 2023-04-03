@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 ##
-#   Rebuild JS project with the latest versions of custom modules being linked into './node_modules/' folders.
+#   Rebuild JS project with the latest versions of custom modules being linked from './node_modules/' folder.
 ##
 # root directory (relative to the current shell script, not to the execution point)
 DIR_ROOT=${DIR_ROOT:-$(cd "$(dirname "$0")/../../" && pwd)}
