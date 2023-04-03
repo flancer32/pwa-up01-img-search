@@ -17,13 +17,14 @@
   "scripts": {
     "db-reset": "node ./bin/tequila.mjs db-init",
     "help": "node ./bin/tequila.mjs -h",
+    "rebuild": "rm -fr node_modules package-lock.json && npm install",
     "start": "node ./bin/tequila.mjs web-server-start",
     "stop": "node ./bin/tequila.mjs web-server-stop"
   },
   "dependencies": {
     "@teqfw/core": "^0.9.0",
     "@teqfw/db": "^0.6.0",
-    "@teqfw/di": "^0.12.0",
+    "@teqfw/di": "^0.12.1",
     "@teqfw/test": "^0.3.0",
     "@teqfw/ui-quasar": "^0.4.0",
     "@teqfw/vue": "^0.4.0",
