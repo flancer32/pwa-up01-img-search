@@ -2,13 +2,13 @@
  * Upload image to backend.
  */
 // MODULE'S VARS
-const NS = 'App_Shared_Event_Front_Image_Upload_Request';
+const NS = 'App_Shared_Web_Api_Image_Upload';
 
 // MODULE'S CLASSES
 /**
- * @memberOf App_Shared_Event_Front_Image_Upload_Request
+ * @memberOf App_Shared_Web_Api_Image_Upload
  */
-class Dto {
+class Request {
     static namespace = NS;
     /**
      * Base64 encoded image.
@@ -33,30 +33,57 @@ class Dto {
 }
 
 /**
- * @implements TeqFw_Core_Shared_Api_Factory_Dto
+ * @memberOf App_Shared_Web_Api_Image_Upload
  */
-export default class App_Shared_Event_Front_Image_Upload_Request {
+class Response {
+    static namespace = NS;
+    /**
+     * @type {App_Shared_Dto_Image.Dto}
+     */
+    item;
+}
+
+/**
+ * @implements TeqFw_Web_Api_Shared_Api_Endpoint
+ */
+export default class App_Shared_Web_Api_Image_Upload {
     constructor(spec) {
         // DEPS
         /** @type {TeqFw_Core_Shared_Util_Cast.castString|function} */
         const castString = spec['TeqFw_Core_Shared_Util_Cast.castString'];
         /** @type {TeqFw_Core_Shared_Util_Cast.castDecimal|function} */
         const castDecimal = spec['TeqFw_Core_Shared_Util_Cast.castDecimal'];
+        /** @type {App_Shared_Dto_Image} */
+        const dtoImage = spec['App_Shared_Dto_Image$'];
 
         // INSTANCE METHODS
+
         /**
-         * @param {App_Shared_Event_Front_Image_Upload_Request.Dto} [data]
-         * @return {App_Shared_Event_Front_Image_Upload_Request.Dto}
+         * @param {App_Shared_Web_Api_Image_Upload.Request} [data]
+         * @return {App_Shared_Web_Api_Image_Upload.Request}
          */
-        this.createDto = function (data) {
-            // create new DTO and populate it with initialization data
-            const res = Object.assign(new Dto(), data);
+        this.createReq = function (data) {
+            // create new DTO
+            const res = new Request();
             // cast known attributes
             res.b64Image = castString(data?.b64Image);
             res.latitude = castDecimal(data?.latitude);
             res.longitude = castDecimal(data?.longitude);
             res.title = castString(data?.title);
             return res;
-        }
+        };
+
+        /**
+         * @param {App_Shared_Web_Api_Image_Upload.Response} [data]
+         * @returns {App_Shared_Web_Api_Image_Upload.Response}
+         */
+        this.createRes = function (data) {
+            // create new DTO
+            const res = new Response();
+            // cast known attributes
+            res.item = dtoImage.createDto(data?.item);
+            return res;
+        };
     }
+
 }

@@ -1,5 +1,5 @@
 /**
- * Web server handler to get uploaded images.
+ * Web server handler to get uploaded images from the back.
  */
 // MODULE'S IMPORT
 import {constants as H2} from 'node:http2';
@@ -75,13 +75,13 @@ export default class App_Back_Web_Handler_Image {
 
         this.init = async function () {
             logger.info(`Initialize uploaded images handler for web requests.`);
-        }
+        };
 
         this.canProcess = function ({method, address} = {}) {
             return (
                 (method === HTTP2_METHOD_GET)
                 && (address?.space === DEF.SHARED.SPACE_IMAGE)
             );
-        }
+        };
     }
 }

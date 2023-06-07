@@ -8,18 +8,21 @@
   "@teqfw/core": {
     "commands": [
       "App_Back_Cli_Image_Remove"
-    ],
-    "plugin": {
-      "onInit": "App_Back_Plugin_Init",
-      "onStop": "App_Back_Plugin_Stop"
-    }
+    ]
   },
   "@teqfw/web": {
     "handlers": {
       "App_Back_Web_Handler_Image": {
+        "comment": "Web server handler to get uploaded images from the back.",
         "before": ["TeqFw_Web_Back_App_Server_Handler_Static"],
         "spaces": ["app-image"]
       }
     }
+  },
+  "@teqfw/web-api": {
+    "services": [
+      "App_Back_Web_Api_Image_List",
+      "App_Back_Web_Api_Image_Upload"
+    ]
   }
 }

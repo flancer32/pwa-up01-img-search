@@ -72,7 +72,7 @@ export default function (spec) {
             </div>
         </q-card-section>
 
-        <q-card-actions align="center" v-if="">
+        <q-card-actions align="center">
             <q-btn label="Upload" color="${DEF.COLOR_Q_PRIMARY}" :disable="!ifCanUpload" v-on:click="onUpload"/>
         </q-card-actions>
 

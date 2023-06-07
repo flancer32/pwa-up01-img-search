@@ -30,13 +30,8 @@ export default class App_Front_App {
         const logger = spec['TeqFw_Core_Shared_Api_Logger$$']; // instance
         /** @type {TeqFw_Ui_Quasar_Front_Lib} */
         const quasar = spec['TeqFw_Ui_Quasar_Front_Lib'];
-        /** @type {TeqFw_Web_Event_Front_Web_Connect_Stream_Open.act|function} */
-        const connReverseOpen = spec['TeqFw_Web_Event_Front_Web_Connect_Stream_Open$'];
         /** @type {TeqFw_Web_Front_Mod_Config} */
         const modCfg = spec['TeqFw_Web_Front_Mod_Config$'];
-        /** @type {TeqFw_Web_Event_Front_Mod_Identity_Front} */
-        const modIdFront = spec['TeqFw_Web_Event_Front_Mod_Identity_Front$'];
-
         // VARS
         let _isInitialized = false; // application is initialized and can be mounted
         let _print; // function to printout logs to UI or console
@@ -57,16 +52,6 @@ export default class App_Front_App {
              */
             function createPrintout(fn) {
                 return (typeof fn === 'function') ? fn : (msg) => console.log(msg);
-            }
-
-            /**
-             * Create processes that start on events.
-             * Some processes (authentication) should be subscribed to events before Reverse Stream can be opened.
-             * TODO: this should be done using 'teqfw.json' descriptor
-             * @param {TeqFw_Di_Shared_Container} container
-             */
-            async function initEventListeners(container) {
-                await container.get('App_Front_Listen_Connect_Manager$');
             }
 
             function initQuasarUi(app, quasar) {
@@ -118,13 +103,7 @@ export default class App_Front_App {
             // other initialization
             await modCfg.init({}); // this app has no separate 'doors' (entry points)
             _print(`Application config is loaded.`);
-            await modIdFront.init();
-            _print(`Front UUID: ${modIdFront.getFrontUuid()}.`);
             try {
-                await initEventListeners(container);
-                _print(`Event listeners are created.`);
-                await connReverseOpen();
-                _print(`Stream for backend events is opened.`);
                 initQuasarUi(_root, quasar);
                 _print(`Quasar UI is initialized.`);
                 initRouter(_root, DEF, container);
@@ -135,7 +114,7 @@ export default class App_Front_App {
                 res = false;
             }
             return res;
-        }
+        };
 
         /**
          * Mount root vue component of the application to DOM element.
@@ -150,7 +129,7 @@ export default class App_Front_App {
                 const elLauncher = document.getElementById('launcher');
                 elLauncher.remove();
             }
-        }
+        };
 
         this.reinstall = function (elRoot) {
             _print(`
@@ -158,6 +137,6 @@ It is required to reinstall app. Please clean up all data in DevTools
 (F12 / Application / Storage / Clear site data).
 Then reload this page.
 `);
-        }
+        };
     }
 }

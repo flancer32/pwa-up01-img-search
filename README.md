@@ -26,6 +26,21 @@ $ ./bin/deploy/dev.sh
 $ ./bin/deploy/demo.sh
 ```
 
+### Dev install on Windows
+
+ATTENTION: Configure connection to PostgreSQL DB before run `db-init`.
+
+```shell
+>git clone https://github.com/flancer32/pwa-up01-img-search.git
+>cd pwa-up01-img-search
+>npm install
+>node .\bin\tequila.mjs help
+>node .\bin\tequila.mjs db-init
+>node .\bin\tequila.mjs web-server-start -1
+```
+
+Goto http://localhost:8080/ to validate app.
+
 ## Local Config
 
 Save [./cfg/init.json](./cfg/init.json) as `./cfg/local.json` then edit local configuration options (db, port, etc.).

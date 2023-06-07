@@ -5,25 +5,17 @@
 export default class App_Front_Mod_Image {
     constructor(spec) {
         // DEPS
-        /** @type {App_Front_Defaults} */
-        const DEF = spec['App_Front_Defaults$'];
         /** @type {TeqFw_Core_Shared_Api_Logger} */
         const logger = spec['TeqFw_Core_Shared_Api_Logger$$']; // instance
-        /** @type {TeqFw_Web_Event_Front_Act_Trans_Call.act|function} */
-        const callTrans = spec['TeqFw_Web_Event_Front_Act_Trans_Call$'];
-        /** @type {App_Shared_Event_Front_Image_List_Request} */
-        const esfReqList = spec['App_Shared_Event_Front_Image_List_Request$'];
-        /** @type {App_Shared_Event_Back_Image_List_Response} */
-        const esbResList = spec['App_Shared_Event_Back_Image_List_Response$'];
-        /** @type {App_Shared_Event_Front_Image_Upload_Request} */
-        const esfReqUpload = spec['App_Shared_Event_Front_Image_Upload_Request$'];
-        /** @type {App_Shared_Event_Back_Image_Upload_Response} */
-        const esbResUpload = spec['App_Shared_Event_Back_Image_Upload_Response$'];
+        /** @type {TeqFw_Web_Api_Front_Web_Connect} */
+        const connApi = spec['TeqFw_Web_Api_Front_Web_Connect$'];
+        /** @type {App_Shared_Web_Api_Image_List} */
+        const apiList = spec['App_Shared_Web_Api_Image_List$'];
+        /** @type {App_Shared_Web_Api_Image_Upload} */
+        const apiUpload = spec['App_Shared_Web_Api_Image_Upload$'];
 
         // MAIN
         logger.setNamespace(this.constructor.name);
-
-        // FUNCS
 
         // INSTANCE METHODS
 
@@ -37,20 +29,21 @@ export default class App_Front_Mod_Image {
          */
         this.create = async function (title, base64, lat, long) {
             try {
-                const req = esfReqUpload.createDto();
+                const req = apiUpload.createReq();
                 req.b64Image = base64;
                 req.title = title;
                 req.latitude = lat;
                 req.longitude = long;
-                /** @type {App_Shared_Event_Back_Image_Upload_Response.Dto} */
-                const rs = await callTrans(req, esbResUpload, {timeout: DEF.TIMEOUT_RESPONSE});
+                // noinspection JSValidateTypes
+                /** @type {App_Shared_Web_Api_Image_Upload.Response} */
+                const rs = await connApi.send(req, apiUpload);
                 return (rs?.item) ? rs.item : null;
             } catch (e) {
                 // timeout or error
                 logger.error(`Cannot upload image to backend. Error: ${e?.message}`);
             }
             return null;
-        }
+        };
 
         /**
          * @param {string} [key]
@@ -58,16 +51,17 @@ export default class App_Front_Mod_Image {
          */
         this.list = async function (key) {
             try {
-                const req = esfReqList.createDto();
+                const req = apiList.createReq();
                 req.searchKey = key;
-                /** @type {App_Shared_Event_Back_Image_List_Response.Dto} */
-                const rs = await callTrans(req, esbResList);
+                // noinspection JSValidateTypes
+                /** @type {App_Shared_Web_Api_Image_List.Response} */
+                const rs = await connApi.send(req, apiList);
                 return rs?.items ?? [];
             } catch (e) {
                 // timeout or error
                 logger.error(`Cannot load list of uploads from backend. Error: ${e?.message}`);
             }
             return null;
-        }
+        };
     }
 }

@@ -3,7 +3,6 @@
  */
 'use strict';
 // MODULE'S IMPORT
-import DefWebEvt from './src/@teqfw/web-event/Shared/Defaults.mjs';
 import DefApp from './src/@flancer32/pwa-up01-img-search/Shared/Defaults.mjs';
 
 // VARS
@@ -24,8 +23,6 @@ const FILES_TO_CACHE = [
     './styles.css',
     './sw.js',
 ];
-/** @type {TeqFw_Web_Event_Shared_Defaults} */
-const DEF_WEB_EVT = new DefWebEvt();
 /** @type {App_Shared_Defaults} */
 const DEF_APP = new DefApp();
 
@@ -70,11 +67,9 @@ function onFetch(event) {
      */
     function detectBypass(method, url) {
         const IMG = new RegExp(`(.*)(\\/${DEF_APP.SPACE_IMAGE}\\/)(.*)`);
-        const SSE_OPEN = new RegExp(`(.*)(\\/${DEF_WEB_EVT.SPACE_STREAM_OPEN}\\/)(.*)`);
         return !!(
             method === 'POST' ||
-            url.pathname.match(IMG) ||
-            url.pathname.match(SSE_OPEN)
+            url.pathname.match(IMG)
         );
     }
 
